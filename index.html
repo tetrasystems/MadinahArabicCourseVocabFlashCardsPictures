@@ -192,6 +192,42 @@
         .word-image {
             font-size: 4em;
             margin-bottom: 15px;
+            display: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .word-image.revealed {
+            display: block;
+            animation: fadeInBounce 0.5s ease;
+        }
+
+        @keyframes fadeInBounce {
+            0% { opacity: 0; transform: scale(0.8); }
+            50% { transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .hint-btn {
+            background: #ff9800;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .hint-btn:hover {
+            background: #f57c00;
+            transform: translateY(-2px);
+        }
+
+        .hint-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .arabic-word {
@@ -454,6 +490,7 @@
 
         <div class="card-container">
             <div class="flashcard" id="flashcard">
+                <button class="hint-btn" id="hint-btn">💡 Show Hint</button>
                 <div class="word-image" id="word-image">📖</div>
                 <div class="arabic-word" id="arabic-word"></div>
                 
@@ -499,30 +536,30 @@
         // Complete Vocabulary Data from Madina Book 1 (All Lessons 1-23)
         const vocabularyData = {
             1: [
-                { arabic: 'بَيْت', english: 'house', emoji: '🏠' },
-                { arabic: 'مَسْجِد', english: 'mosque', emoji: '🕌' },
-                { arabic: 'بَاب', english: 'door', emoji: '🚪' },
-                { arabic: 'كِتَاب', english: 'book', emoji: '📖' },
-                { arabic: 'قَلَم', english: 'pen', emoji: '✒️' },
-                { arabic: 'مِفْتَاح', english: 'key', emoji: '🔑' },
-                { arabic: 'مَكْتَب', english: 'desk', emoji: '🪑' },
-                { arabic: 'سَرِير', english: 'bed', emoji: '🛏️' },
-                { arabic: 'كُرْسِي', english: 'chair', emoji: '🪑' },
-                { arabic: 'نَجْم', english: 'star', emoji: '⭐' },
-                { arabic: 'قَمِيص', english: 'shirt', emoji: '👔' },
-                { arabic: 'طَبِيب', english: 'doctor', emoji: '👨‍⚕️' },
-                { arabic: 'وَلَد', english: 'boy', emoji: '👦' },
-                { arabic: 'طَالِب', english: 'student', emoji: '📚' },
-                { arabic: 'رَجُل', english: 'man', emoji: '👨' },
-                { arabic: 'تَاجِر', english: 'merchant', emoji: '🛒' },
-                { arabic: 'كَلْب', english: 'dog', emoji: '🐕' },
-                { arabic: 'قِطّ', english: 'cat', emoji: '🐈' },
-                { arabic: 'حِمَار', english: 'donkey', emoji: '🫏' },
-                { arabic: 'حِصَان', english: 'horse', emoji: '🐴' },
-                { arabic: 'جَمَل', english: 'camel', emoji: '🐫' },
-                { arabic: 'دِيك', english: 'rooster', emoji: '🐓' },
-                { arabic: 'مُدَرِّس', english: 'teacher', emoji: '👨‍🏫' },
-                { arabic: 'مِنْدِيل', english: 'handkerchief', emoji: '🧻' }
+                { arabic: 'بَيْتٌ', english: 'house', emoji: '🏠' },
+                { arabic: 'مَسْجِدٌ', english: 'mosque', emoji: '🕌' },
+                { arabic: 'بَابٌ', english: 'door', emoji: '🚪' },
+                { arabic: 'كِتَابٌ', english: 'book', emoji: '📖' },
+                { arabic: 'قَلَمٌ', english: 'pen', emoji: '✒️' },
+                { arabic: 'مِفْتَاحٌ', english: 'key', emoji: '🔑' },
+                { arabic: 'مَكْتَبٌ', english: 'desk', emoji: '🪑' },
+                { arabic: 'سَرِيرٌ', english: 'bed', emoji: '🛏️' },
+                { arabic: 'كُرْسِيٌّ', english: 'chair', emoji: '🪑' },
+                { arabic: 'نَجْمٌ', english: 'star', emoji: '⭐' },
+                { arabic: 'قَمِيصٌ', english: 'shirt', emoji: '👔' },
+                { arabic: 'طَبِيبٌ', english: 'doctor', emoji: '👨‍⚕️' },
+                { arabic: 'وَلَدٌ', english: 'boy', emoji: '👦' },
+                { arabic: 'طَالِبٌ', english: 'student', emoji: '📚' },
+                { arabic: 'رَجُلٌ', english: 'man', emoji: '👨' },
+                { arabic: 'تَاجِرٌ', english: 'merchant', emoji: '🛒' },
+                { arabic: 'كَلْبٌ', english: 'dog', emoji: '🐕' },
+                { arabic: 'قِطٌّ', english: 'cat', emoji: '🐈' },
+                { arabic: 'حِمَارٌ', english: 'donkey', emoji: '🫏' },
+                { arabic: 'حِصَانٌ', english: 'horse', emoji: '🐴' },
+                { arabic: 'جَمَلٌ', english: 'camel', emoji: '🐫' },
+                { arabic: 'دِيكٌ', english: 'rooster', emoji: '🐓' },
+                { arabic: 'مُدَرِّسٌ', english: 'teacher', emoji: '👨‍🏫' },
+                { arabic: 'مِنْدِيلٌ', english: 'handkerchief', emoji: '🧻' }
             ],
             2: [
                 { arabic: 'حَجَر', english: 'stone', emoji: '🪨' },
@@ -674,76 +711,100 @@
                 { arabic: 'المَمْلَكَةُ العَرَبِيَّة', english: 'kingdom of saudi arabia', emoji: '🇸🇦' }
             ],
             13: [
-                { arabic: 'فُقَرَاء', english: 'poor (pl)', emoji: '💰' },
-                { arabic: 'أَغْنِيَاء', english: 'rich (pl)', emoji: '💎' },
-                { arabic: 'أَصْدِقَاء', english: 'friends', emoji: '👥' },
-                { arabic: 'أَطِبَّاء', english: 'doctors', emoji: '👨‍⚕️' },
-                { arabic: 'فَتَى', english: 'young man', emoji: '👦' },
+                { arabic: 'فَقِيرٌ', english: 'poor', emoji: '💰' },
+                { arabic: 'فُقَرَاءُ', english: 'poor (pl)', emoji: '💰' },
+                { arabic: 'غَنِيٌّ', english: 'rich', emoji: '💎' },
+                { arabic: 'أَغْنِيَاءُ', english: 'rich (pl)', emoji: '💎' },
+                { arabic: 'صَدِيقٌ', english: 'friend', emoji: '🤝' },
+                { arabic: 'أَصْدِقَاءُ', english: 'friends', emoji: '👥' },
+                { arabic: 'طَبِيبٌ', english: 'doctor', emoji: '👨‍⚕️' },
+                { arabic: 'أَطِبَّاءُ', english: 'doctors', emoji: '👨‍⚕️' },
+                { arabic: 'فَتًى', english: 'young man', emoji: '👦' },
                 { arabic: 'فِتْيَةٌ', english: 'young men', emoji: '👦' },
+                { arabic: 'أَخٌ', english: 'brother', emoji: '👦' },
                 { arabic: 'إِخْوَةٌ', english: 'brothers', emoji: '👦' },
-                { arabic: 'جُدُد', english: 'new (pl)', emoji: '✨' },
+                { arabic: 'جُدُدٌ', english: 'new (pl)', emoji: '✨' },
+                { arabic: 'مُدَرِّسٌ', english: 'teacher', emoji: '👨‍🏫' },
                 { arabic: 'مُدَرِّسُونَ', english: 'teachers', emoji: '👨‍🏫' },
-                { arabic: 'مُهَنْدِس', english: 'engineer', emoji: '⚙️' },
+                { arabic: 'مُهَنْدِسٌ', english: 'engineer', emoji: '⚙️' },
                 { arabic: 'مُهَنْدِسُونَ', english: 'engineers', emoji: '⚙️' },
-                { arabic: 'فَلاَّح', english: 'farmer', emoji: '👨‍🌾' },
+                { arabic: 'فَلاَّحٌ', english: 'farmer', emoji: '👨‍🌾' },
                 { arabic: 'فَلاَّحُونَ', english: 'farmers', emoji: '👨‍🌾' },
-                { arabic: 'مُجْتَهِد', english: 'hardworking', emoji: '💼' },
-                { arabic: 'هَؤُلاء', english: 'these', emoji: '👉' },
-                { arabic: 'بَعْضُهُم', english: 'some of them', emoji: '👥' },
-                { arabic: 'طُلاَّب', english: 'students', emoji: '📚' },
-                { arabic: 'تُجَار', english: 'merchants', emoji: '🛒' },
-                { arabic: 'حَاج', english: 'pilgrim', emoji: '🕋' },
-                { arabic: 'حُجَّاج', english: 'pilgrims', emoji: '🕋' },
+                { arabic: 'مُجْتَهِدٌ', english: 'hardworking', emoji: '💼' },
+                { arabic: 'هَؤُلاءِ', english: 'these', emoji: '👉' },
+                { arabic: 'بَعْضُهُمْ', english: 'some of them', emoji: '👥' },
+                { arabic: 'طَالِبٌ', english: 'student', emoji: '📚' },
+                { arabic: 'طُلاَّبٌ', english: 'students', emoji: '📚' },
+                { arabic: 'تَاجِرٌ', english: 'merchant', emoji: '🛒' },
+                { arabic: 'تُجَّارٌ', english: 'merchants', emoji: '🛒' },
+                { arabic: 'حَاجٌّ', english: 'pilgrim', emoji: '🕋' },
+                { arabic: 'حُجَّاجٌ', english: 'pilgrims', emoji: '🕋' },
+                { arabic: 'رَجُلٌ', english: 'man', emoji: '👨' },
                 { arabic: 'رِجَالٌ', english: 'men', emoji: '👨' },
-                { arabic: 'كِبَار', english: 'big (pl)', emoji: '📏' },
-                { arabic: 'صِغَار', english: 'small (pl)', emoji: '🔍' },
-                { arabic: 'قِصَار', english: 'short (pl)', emoji: '📐' },
+                { arabic: 'كَبِيرٌ', english: 'big', emoji: '📏' },
+                { arabic: 'كِبَارٌ', english: 'big (pl)', emoji: '📏' },
+                { arabic: 'صَغِيرٌ', english: 'small', emoji: '🔍' },
+                { arabic: 'صِغَارٌ', english: 'small (pl)', emoji: '🔍' },
+                { arabic: 'قَصِيرٌ', english: 'short', emoji: '📐' },
+                { arabic: 'قِصَارٌ', english: 'short (pl)', emoji: '📐' },
+                { arabic: 'طَوِيلٌ', english: 'tall', emoji: '📏' },
                 { arabic: 'طِوَالٌ', english: 'tall (pl)', emoji: '📏' },
-                { arabic: 'أَوْلاد', english: 'boys', emoji: '👦' },
+                { arabic: 'وَلَدٌ', english: 'boy', emoji: '👦' },
+                { arabic: 'أَوْلادٌ', english: 'boys', emoji: '👦' },
                 { arabic: 'مُجْتَهِدُونَ', english: 'hardworking (pl)', emoji: '💼' },
-                { arabic: 'مُسْلِم', english: 'muslim', emoji: '🕌' },
+                { arabic: 'مُسْلِمٌ', english: 'muslim', emoji: '🕌' },
                 { arabic: 'مُسْلِمُونَ', english: 'muslims', emoji: '🕌' },
-                { arabic: 'مَلْعَب', english: 'playground', emoji: '⚽' },
-                { arabic: 'الإِبْتِدَائِيَّة', english: 'primary', emoji: '🏫' },
-                { arabic: 'نُجُوم', english: 'stars', emoji: '⭐' },
+                { arabic: 'مَلْعَبٌ', english: 'playground', emoji: '⚽' },
+                { arabic: 'الإِبْتِدَائِيَّةُ', english: 'primary', emoji: '🏫' },
+                { arabic: 'نَجْمٌ', english: 'star', emoji: '⭐' },
+                { arabic: 'نُجُومٌ', english: 'stars', emoji: '⭐' },
                 { arabic: 'مُسْلِمَةٌ', english: 'muslim (f)', emoji: '🕌' },
-                { arabic: 'مُسْلِمَات', english: 'muslims (f)', emoji: '🕌' },
+                { arabic: 'مُسْلِمَاتٌ', english: 'muslims (f)', emoji: '🕌' },
                 { arabic: 'زَوْجَةٌ', english: 'wife', emoji: '💍' },
-                { arabic: 'زَوْجَات', english: 'wives', emoji: '💍' },
-                { arabic: 'أَخَوَات', english: 'sisters', emoji: '👧' },
-                { arabic: 'فَتَيَات', english: 'young women', emoji: '👧' },
+                { arabic: 'زَوْجَاتٌ', english: 'wives', emoji: '💍' },
+                { arabic: 'أُخْتٌ', english: 'sister', emoji: '👧' },
+                { arabic: 'أَخَوَاتٌ', english: 'sisters', emoji: '👧' },
+                { arabic: 'فَتَاةٌ', english: 'young woman', emoji: '👧' },
+                { arabic: 'فَتَيَاتٌ', english: 'young women', emoji: '👧' },
                 { arabic: 'جَدِيدَةٌ', english: 'new (f)', emoji: '✨' },
                 { arabic: 'كَبِيرَةٌ', english: 'big (f)', emoji: '📏' },
                 { arabic: 'صَغِيرَةٌ', english: 'small (f)', emoji: '🔍' },
                 { arabic: 'طَوِيلَةٌ', english: 'tall (f)', emoji: '📏' },
                 { arabic: 'مُمَرِّضَةٌ', english: 'nurse', emoji: '👩‍⚕️' },
-                { arabic: 'مُمَرِّضَات', english: 'nurses', emoji: '👩‍⚕️' },
-                { arabic: 'إِبْن', english: 'son', emoji: '👦' },
+                { arabic: 'مُمَرِّضَاتٌ', english: 'nurses', emoji: '👩‍⚕️' },
+                { arabic: 'إِبْنٌ', english: 'son', emoji: '👦' },
                 { arabic: 'أَبْنَاءٌ', english: 'sons', emoji: '👦' },
-                { arabic: 'عَم', english: 'paternal uncle', emoji: '👨' },
-                { arabic: 'أَعْمَام', english: 'paternal uncles', emoji: '👨' },
-                { arabic: 'ضَيْف', english: 'guest', emoji: '🎭' },
-                { arabic: 'ضُيُوف', english: 'guests', emoji: '🎭' },
-                { arabic: 'زُمَلاء', english: 'colleagues', emoji: '👥' },
-                { arabic: 'كُتُب', english: 'books', emoji: '📚' },
+                { arabic: 'عَمٌّ', english: 'paternal uncle', emoji: '👨' },
+                { arabic: 'أَعْمَامٌ', english: 'paternal uncles', emoji: '👨' },
+                { arabic: 'ضَيْفٌ', english: 'guest', emoji: '🎭' },
+                { arabic: 'ضُيُوفٌ', english: 'guests', emoji: '🎭' },
+                { arabic: 'زَمِيلٌ', english: 'colleague', emoji: '👥' },
+                { arabic: 'زُمَلاءُ', english: 'colleagues', emoji: '👥' },
+                { arabic: 'كِتَابٌ', english: 'book', emoji: '📖' },
+                { arabic: 'كُتُبٌ', english: 'books', emoji: '📚' },
                 { arabic: 'جَبَلٌ', english: 'mountain', emoji: '⛰️' },
                 { arabic: 'جِبَالٌ', english: 'mountains', emoji: '⛰️' },
-                { arabic: 'أَقْلام', english: 'pens', emoji: '✒️' },
-                { arabic: 'هُم', english: 'they (m)', emoji: '👥' },
-                { arabic: 'بَعْض', english: 'some', emoji: '➗' },
+                { arabic: 'قَلَمٌ', english: 'pen', emoji: '✒️' },
+                { arabic: 'أَقْلامٌ', english: 'pens', emoji: '✒️' },
+                { arabic: 'هُمْ', english: 'they (m)', emoji: '👥' },
+                { arabic: 'بَعْضٌ', english: 'some', emoji: '➗' },
                 { arabic: 'قَرْيَةٌ', english: 'village', emoji: '🏘️' },
+                { arabic: 'إِسْمٌ', english: 'name', emoji: '🏷️' },
                 { arabic: 'أَسْمَاءٌ', english: 'names', emoji: '🏷️' },
-                { arabic: 'نَاس', english: 'people', emoji: '👥' },
+                { arabic: 'نَاسٌ', english: 'people', emoji: '👥' },
                 { arabic: 'ذَهَبْنَ', english: 'they went (f)', emoji: '🚶' },
-                { arabic: 'مَطْعَم', english: 'restaurant', emoji: '🍽️' },
+                { arabic: 'مَطْعَمٌ', english: 'restaurant', emoji: '🍽️' },
                 { arabic: 'حَقْلٌ', english: 'field', emoji: '🌾' },
                 { arabic: 'حُقُولٌ', english: 'fields', emoji: '🌾' },
                 { arabic: 'هُنَّ', english: 'they (f)', emoji: '👥' },
-                { arabic: 'بَنَات', english: 'daughters', emoji: '👧' },
-                { arabic: 'طَبِيبَات', english: 'doctors (f)', emoji: '👩‍⚕️' },
-                { arabic: 'مُدَرِّسَات', english: 'teachers (f)', emoji: '👩‍🏫' },
-                { arabic: 'دُكْتُورَات', english: 'lady professors', emoji: '👩‍🏫' },
-                { arabic: 'أَزْوَاج', english: 'husbands', emoji: '💍' },
+                { arabic: 'بَنَاتٌ', english: 'daughters', emoji: '👧' },
+                { arabic: 'طَبِيبَةٌ', english: 'doctor (f)', emoji: '👩‍⚕️' },
+                { arabic: 'طَبِيبَاتٌ', english: 'doctors (f)', emoji: '👩‍⚕️' },
+                { arabic: 'مُدَرِّسَةٌ', english: 'teacher (f)', emoji: '👩‍🏫' },
+                { arabic: 'مُدَرِّسَاتٌ', english: 'teachers (f)', emoji: '👩‍🏫' },
+                { arabic: 'دُكْتُورَاتٌ', english: 'lady professors', emoji: '👩‍🏫' },
+                { arabic: 'زَوْجٌ', english: 'husband', emoji: '💍' },
+                { arabic: 'أَزْوَاجٌ', english: 'husbands', emoji: '💍' },
                 { arabic: 'بَعْضُهُنَّ', english: 'some of them (f)', emoji: '👥' },
                 { arabic: 'تُرْكِيَا', english: 'turkey', emoji: '🇹🇷' },
                 { arabic: 'لَيْلَى', english: 'laila', emoji: '👤' },
@@ -751,8 +812,8 @@
                 { arabic: 'نِسَاءٌ', english: 'women', emoji: '👩' },
                 { arabic: 'دُكْتُورَةٌ', english: 'lady professor', emoji: '👩‍🏫' },
                 { arabic: 'أُولَئِكَ', english: 'those', emoji: '👉' },
-                { arabic: 'عَالِم', english: 'scholar', emoji: '👴' },
-                { arabic: 'عُلَمَاءٌ', english: 'scholars', emoji: '👴' }
+                { arabic: 'عَالِمٌ', english: 'scholar', emoji: '👴' },
+                { arabic: 'عُلَمَاءُ', english: 'scholars', emoji: '👴' }
             ],
             14: [
                 { arabic: 'أَنْتُم', english: 'you (pl.m)', emoji: '👥' },
@@ -1139,7 +1200,16 @@
 
             const card = currentCards[currentIndex];
             document.getElementById('arabic-word').textContent = card.arabic;
-            document.getElementById('word-image').textContent = card.emoji;
+            
+            // Reset image and hint button
+            const imageEl = document.getElementById('word-image');
+            imageEl.textContent = card.emoji;
+            imageEl.classList.remove('revealed');
+            
+            const hintBtn = document.getElementById('hint-btn');
+            hintBtn.disabled = false;
+            hintBtn.textContent = '💡 Show Hint';
+            
             document.getElementById('answer-input').value = '';
             document.getElementById('answer-input').className = '';
             document.getElementById('feedback').classList.remove('show');
@@ -1158,11 +1228,24 @@
             const feedback = document.getElementById('feedback');
             const answerInput = document.getElementById('answer-input');
             
-            // Simple fuzzy matching - allow for minor spelling differences
-            const isCorrect = userAnswer === correctAnswer || 
-                             correctAnswer.includes(userAnswer) ||
-                             userAnswer.includes(correctAnswer) ||
-                             levenshteinDistance(userAnswer, correctAnswer) <= 2;
+            // Check if user just added/removed 's' or 'es' for plural (should be WRONG)
+            const isPluralMistake = (
+                (userAnswer + 's' === correctAnswer) ||
+                (userAnswer + 'es' === correctAnswer) ||
+                (correctAnswer + 's' === userAnswer) ||
+                (correctAnswer + 'es' === userAnswer) ||
+                (userAnswer === correctAnswer.replace(/s$/, '')) ||
+                (correctAnswer === userAnswer.replace(/s$/, ''))
+            );
+            
+            // Check for exact match first
+            let isCorrect = userAnswer === correctAnswer;
+            
+            // If not exact and not a plural mistake, allow fuzzy matching
+            if (!isCorrect && !isPluralMistake) {
+                // Allow fuzzy matching for typos (but not for plural confusion)
+                isCorrect = levenshteinDistance(userAnswer, correctAnswer) <= 2;
+            }
             
             if (isCorrect) {
                 correctCount++;
@@ -1297,6 +1380,16 @@
             document.getElementById('skip-btn').addEventListener('click', nextCard);
             document.getElementById('prev-btn').addEventListener('click', prevCard);
             document.getElementById('next-btn').addEventListener('click', nextCard);
+            
+            // Hint button
+            document.getElementById('hint-btn').addEventListener('click', () => {
+                const imageEl = document.getElementById('word-image');
+                const hintBtn = document.getElementById('hint-btn');
+                
+                imageEl.classList.add('revealed');
+                hintBtn.disabled = true;
+                hintBtn.textContent = '✓ Hint Shown';
+            });
 
             // Enter key to check answer
             document.getElementById('answer-input').addEventListener('keypress', (e) => {

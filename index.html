@@ -2,27 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Madina Book 1 Complete Vocabulary Flashcards</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Madina Book 1 - Complete Mobile Flashcards</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            touch-action: pan-y;
         }
 
-        /* Cover Page Styles */
+        /* Cover Page */
         .cover-page {
-            max-width: 1200px;
+            padding: 20px;
+            max-width: 600px;
             margin: 0 auto;
-            display: block;
         }
 
         .cover-page.hidden {
@@ -32,56 +39,59 @@
         .cover-header {
             text-align: center;
             color: white;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
         }
 
         .cover-header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
+            font-size: 1.8em;
+            margin-bottom: 8px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .cover-header p {
-            font-size: 1.2em;
+            font-size: 0.95em;
             opacity: 0.95;
         }
 
         .lesson-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .lesson-card {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 12px;
+            padding: 18px;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            min-height: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: transform 0.2s;
         }
 
-        .lesson-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        .lesson-card:active {
+            transform: scale(0.97);
         }
 
         .lesson-card h3 {
             color: #667eea;
-            font-size: 1.5em;
-            margin-bottom: 10px;
+            font-size: 1.2em;
+            margin-bottom: 5px;
         }
 
         .lesson-card .word-count {
             color: #666;
-            font-size: 0.9em;
+            font-size: 0.85em;
         }
 
         .all-lessons-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            grid-column: 1 / -1;
+            min-height: 85px;
         }
 
         .all-lessons-card h3 {
@@ -89,122 +99,108 @@
         }
 
         .all-lessons-card .word-count {
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.95);
         }
 
-        /* Flashcard Page Styles */
+        /* Flashcard Page */
         .flashcard-page {
             display: none;
+            flex-direction: column;
+            height: 100vh;
+            padding: 15px;
             max-width: 600px;
             margin: 0 auto;
         }
 
         .flashcard-page.active {
             display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
         .back-button {
-            align-self: flex-start;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.25);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 10px;
-            cursor: pointer;
             font-size: 1em;
-            margin-bottom: 20px;
-            transition: all 0.3s;
+            margin-bottom: 12px;
+            min-height: 48px;
+            font-weight: 600;
         }
 
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.5);
+        .back-button:active {
+            background: rgba(255, 255, 255, 0.4);
         }
 
         .header {
             color: white;
             text-align: center;
-            margin-bottom: 20px;
-            width: 100%;
+            margin-bottom: 12px;
         }
 
         .header h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
+            font-size: 1.4em;
+            margin-bottom: 5px;
         }
 
         .stats {
             background: rgba(255, 255, 255, 0.2);
-            padding: 15px 25px;
-            border-radius: 15px;
+            padding: 12px;
+            border-radius: 12px;
             display: flex;
-            gap: 30px;
+            gap: 10px;
             color: white;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
         .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex: 1;
+            text-align: center;
         }
 
         .stat-label {
-            font-size: 0.9em;
+            font-size: 0.75em;
             opacity: 0.9;
+            display: block;
         }
 
         .stat-value {
             font-size: 1.5em;
             font-weight: bold;
+            display: block;
         }
 
         .card-container {
-            perspective: 1000px;
-            width: 100%;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-bottom: 15px;
         }
 
         .flashcard {
             background: white;
             border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            min-height: 450px;
+            padding: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            min-height: 400px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            transition: transform 0.3s ease;
-            touch-action: pan-y;
+            justify-content: center;
+            transition: transform 0.2s ease;
+            position: relative;
         }
 
         .flashcard.swipe-left {
-            transform: translateX(-100px) rotate(-10deg);
-            opacity: 0.5;
+            transform: translateX(-50px) rotate(-5deg);
+            opacity: 0.7;
         }
 
         .flashcard.swipe-right {
-            transform: translateX(100px) rotate(10deg);
-            opacity: 0.5;
-        }
-
-        .word-image {
-            font-size: 4em;
-            margin-bottom: 15px;
-            display: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .word-image.revealed {
-            display: block;
-            animation: fadeInBounce 0.5s ease;
-        }
-
-        @keyframes fadeInBounce {
-            0% { opacity: 0; transform: scale(0.8); }
-            50% { transform: scale(1.1); }
-            100% { opacity: 1; transform: scale(1); }
+            transform: translateX(50px) rotate(5deg);
+            opacity: 0.7;
         }
 
         .hint-btn {
@@ -212,51 +208,80 @@
             color: white;
             padding: 10px 20px;
             border: none;
-            border-radius: 10px;
-            cursor: pointer;
+            border-radius: 8px;
             font-size: 0.9em;
-            margin-bottom: 20px;
-            transition: all 0.3s;
+            margin-bottom: 15px;
+            min-height: 44px;
+            font-weight: 600;
         }
 
-        .hint-btn:hover {
+        .hint-btn:active {
             background: #f57c00;
-            transform: translateY(-2px);
         }
 
         .hint-btn:disabled {
             background: #ccc;
-            cursor: not-allowed;
-            transform: none;
+        }
+
+        .word-image {
+            font-size: 3em;
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        .word-image.revealed {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .arabic-word {
-            font-size: 3em;
+            font-size: 2.2em;
             font-weight: bold;
             color: #667eea;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-align: center;
             direction: rtl;
+            line-height: 1.4;
         }
 
         .input-section {
             width: 100%;
-            margin-top: 20px;
+        }
+
+        .helper-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .helper-buttons button {
+            flex: 1;
+            padding: 10px;
+            font-size: 0.85em;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            min-height: 44px;
         }
 
         .input-wrapper {
-            position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
         #answer-input {
             width: 100%;
-            padding: 15px;
-            font-size: 1.1em;
+            padding: 14px;
+            font-size: 1.05em;
             border: 3px solid #ddd;
             border-radius: 10px;
             outline: none;
-            transition: border-color 0.3s;
+            -webkit-appearance: none;
+            min-height: 48px;
         }
 
         #answer-input:focus {
@@ -273,41 +298,21 @@
             background-color: #ffebee;
         }
 
-        .button-group {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        button {
-            padding: 12px 25px;
-            font-size: 1em;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-
         .check-btn {
             background: #667eea;
             color: white;
+            width: 100%;
+            padding: 16px;
+            font-size: 1.05em;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            min-height: 54px;
+            margin-bottom: 12px;
         }
 
-        .check-btn:hover {
+        .check-btn:active {
             background: #5568d3;
-            transform: translateY(-2px);
-        }
-
-        .skip-btn {
-            background: #ff9800;
-            color: white;
-        }
-
-        .skip-btn:hover {
-            background: #e68900;
-            transform: translateY(-2px);
         }
 
         .show-answer-btn {
@@ -315,18 +320,27 @@
             color: white;
         }
 
-        .show-answer-btn:hover {
+        .show-answer-btn:active {
             background: #7b1fa2;
-            transform: translateY(-2px);
+        }
+
+        .skip-btn {
+            background: #ff9800;
+            color: white;
+        }
+
+        .skip-btn:active {
+            background: #e68900;
         }
 
         .feedback {
-            margin-top: 15px;
-            padding: 10px;
+            margin-top: 12px;
+            padding: 12px;
             border-radius: 8px;
             text-align: center;
-            font-weight: bold;
+            font-weight: 600;
             display: none;
+            font-size: 0.95em;
         }
 
         .feedback.show {
@@ -350,6 +364,7 @@
             border-radius: 8px;
             text-align: center;
             display: none;
+            font-size: 0.9em;
         }
 
         .correct-answer.show {
@@ -358,49 +373,60 @@
 
         .navigation {
             display: flex;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 12px;
             align-items: center;
+            justify-content: center;
+            max-width: 350px;
+            margin: 0 auto;
         }
 
         .nav-btn {
             background: white;
             color: #667eea;
-            padding: 10px 20px;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1em;
+            min-height: 50px;
+            flex: 1;
         }
 
-        .nav-btn:hover {
+        .nav-btn:active {
             background: #f0f0f0;
         }
 
         .card-progress {
             color: white;
-            font-size: 1.1em;
+            font-size: 1em;
             font-weight: bold;
+            padding: 0 8px;
+            min-width: 60px;
+            text-align: center;
         }
 
         .swipe-hint {
             color: white;
             text-align: center;
-            margin-top: 15px;
-            font-size: 0.9em;
-            opacity: 0.8;
+            margin-top: 10px;
+            font-size: 0.85em;
+            opacity: 0.85;
         }
 
         .attribution {
             background: rgba(255, 255, 255, 0.15);
             color: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 30px;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
             text-align: center;
-            font-size: 0.9em;
-            line-height: 1.6;
+            font-size: 0.85em;
+            line-height: 1.5;
         }
 
         .attribution h3 {
-            margin-bottom: 10px;
-            font-size: 1.1em;
+            margin-bottom: 8px;
+            font-size: 1em;
         }
 
         .attribution a {
@@ -408,35 +434,15 @@
             text-decoration: underline;
         }
 
-        @media (max-width: 600px) {
-            .cover-header h1 {
-                font-size: 2em;
-            }
+        /* Prevent text selection during swipe */
+        .flashcard * {
+            user-select: none;
+            -webkit-user-select: none;
+        }
 
-            .lesson-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .arabic-word {
-                font-size: 2em;
-            }
-
-            .word-image {
-                font-size: 3em;
-            }
-
-            .stats {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .button-group {
-                flex-direction: column;
-            }
-
-            button {
-                width: 100%;
-            }
+        #answer-input {
+            user-select: text;
+            -webkit-user-select: text;
         }
     </style>
 </head>
@@ -446,21 +452,20 @@
         <div class="cover-header">
             <h1>📚 Madina Book 1</h1>
             <p>Complete Arabic Vocabulary Flashcards</p>
-            <p style="font-size: 0.9em; margin-top: 10px;">Choose a lesson to begin practicing</p>
+            <p style="font-size: 0.85em; margin-top: 8px;">All 23 Lessons</p>
         </div>
 
         <div class="lesson-grid" id="lesson-grid">
-            <!-- Lesson cards will be generated by JavaScript -->
+            <!-- Generated by JavaScript -->
         </div>
 
         <div class="attribution">
-            <h3>📚 Attribution & Credits</h3>
-            <p><strong>Vocabulary Source:</strong> Madina Book 1 (Arabic Course for English-Speaking Students)<br>
-            By Dr. V. Abdur Rahim, Islamic University of Madinah</p>
-            <p><strong>Interactive App:</strong> Created with Claude AI by Anthropic</p>
-            <p style="margin-top: 10px; font-size: 0.85em;">
-                For educational purposes only. Please support the original Madina Book series.<br>
-                Visit <a href="https://www.lqtoronto.com/downloads.html" target="_blank">LQ Toronto</a> for official materials.
+            <h3>📚 Attribution</h3>
+            <p><strong>Vocabulary:</strong> Madina Book 1 by Dr. V. Abdur Rahim<br>
+            Islamic University of Madinah</p>
+            <p><strong>App:</strong> Created with Claude AI</p>
+            <p style="margin-top: 8px; font-size: 0.8em;">
+                For educational purposes only
             </p>
         </div>
     </div>
@@ -470,7 +475,7 @@
         <button class="back-button" onclick="backToCover()">← Back to Lessons</button>
 
         <div class="header">
-            <h1 id="lesson-title">Madina Book 1 Vocabulary</h1>
+            <h1 id="lesson-title">Lesson</h1>
         </div>
 
         <div class="stats">
@@ -479,18 +484,18 @@
                 <span class="stat-value" id="correct-count">0</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Incorrect</span>
+                <span class="stat-label">Wrong</span>
                 <span class="stat-value" id="incorrect-count">0</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Accuracy</span>
+                <span class="stat-label">Score</span>
                 <span class="stat-value" id="accuracy">0%</span>
             </div>
         </div>
 
         <div class="card-container">
             <div class="flashcard" id="flashcard">
-                <button class="hint-btn" id="hint-btn">💡 Show Hint</button>
+                <button class="hint-btn" id="hint-btn">💡 Hint</button>
                 <div class="word-image" id="word-image">📖</div>
                 <div class="arabic-word" id="arabic-word"></div>
                 
@@ -499,41 +504,39 @@
                         <input 
                             type="text" 
                             id="answer-input" 
-                            placeholder="Type the English translation..."
+                            placeholder="Type English translation..."
                             autocomplete="off"
+                            autocorrect="off"
+                            autocapitalize="off"
                         >
                     </div>
 
-                    <div class="button-group">
-                        <button class="check-btn" id="check-btn">✓ Check Answer</button>
-                        <button class="show-answer-btn" id="show-answer-btn">👁 Show Answer</button>
-                        <button class="skip-btn" id="skip-btn">→ Skip</button>
-                    </div>
+                    <button class="check-btn" id="check-btn">✓ Check Answer</button>
 
                     <div class="feedback" id="feedback"></div>
                     <div class="correct-answer" id="correct-answer"></div>
+
+                    <div class="helper-buttons">
+                        <button class="show-answer-btn" id="show-answer-btn">👁 Show Answer</button>
+                        <button class="skip-btn" id="skip-btn">⏭ Skip Card</button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="navigation">
-            <button class="nav-btn" id="prev-btn">← Previous</button>
-            <span class="card-progress" id="card-progress">1 / 1</span>
+            <button class="nav-btn" id="prev-btn">← Prev</button>
+            <span class="card-progress" id="card-progress">1/1</span>
             <button class="nav-btn" id="next-btn">Next →</button>
         </div>
 
         <div class="swipe-hint">
-            💡 Swipe left for previous, swipe right for next
-        </div>
-
-        <div class="attribution">
-            <p><strong>Vocabulary:</strong> Madina Book 1 by Dr. V. Abdur Rahim • <strong>App:</strong> Created with Claude AI</p>
+            💡 Swipe left/right to navigate
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/[email protected]/fuse.min.js"></script>
     <script>
-        // Complete Vocabulary Data from Madina Book 1 (All Lessons 1-23)
+        // Complete vocabulary data for all 23 lessons
         const vocabularyData = {
             1: [
                 { arabic: 'بَيْتٌ', english: 'house', emoji: '🏠' },
@@ -562,153 +565,115 @@
                 { arabic: 'مِنْدِيلٌ', english: 'handkerchief', emoji: '🧻' }
             ],
             2: [
-                { arabic: 'حَجَر', english: 'stone', emoji: '🪨' },
-                { arabic: 'حَلِيب', english: 'milk', emoji: '🥛' },
-                { arabic: 'زَعِيم', english: 'leader', emoji: '👔' },
-                { arabic: 'سُكَّر', english: 'sugar', emoji: '🧂' },
-                { arabic: 'كُرَّاسَة', english: 'notebook', emoji: '📓' },
-                { arabic: 'دُكَّان', english: 'shop', emoji: '🏪' },
-                { arabic: 'وَرَقَة', english: 'paper', emoji: '📄' },
-                { arabic: 'تُفَّاحَة', english: 'apple', emoji: '🍎' }
+                { arabic: 'حَجَرٌ', english: 'stone', emoji: '🪨' },
+                { arabic: 'حَلِيبٌ', english: 'milk', emoji: '🥛' },
+                { arabic: 'زَعِيمٌ', english: 'leader', emoji: '👔' },
+                { arabic: 'سُكَّرٌ', english: 'sugar', emoji: '🧂' },
+                { arabic: 'كُرَّاسَةٌ', english: 'notebook', emoji: '📓' },
+                { arabic: 'دُكَّانٌ', english: 'shop', emoji: '🏪' },
+                { arabic: 'وَرَقَةٌ', english: 'paper', emoji: '📄' },
+                { arabic: 'تُفَّاحَةٌ', english: 'apple', emoji: '🍎' }
             ],
             3: [
-                { arabic: 'أَب', english: 'father', emoji: '👨' },
-                { arabic: 'أَخ', english: 'brother', emoji: '👦' },
-                { arabic: 'رَسُول', english: 'messenger', emoji: '📨' },
-                { arabic: 'ال', english: 'the', emoji: '📌' }
+                { arabic: 'أَبٌ', english: 'father', emoji: '👨' },
+                { arabic: 'أَخٌ', english: 'brother', emoji: '👦' },
+                { arabic: 'رَسُولٌ', english: 'messenger', emoji: '📨' },
+                { arabic: 'الـ', english: 'the', emoji: '📌' }
             ],
             4: [
-                { arabic: 'مَكْسُور', english: 'broken', emoji: '💔' },
-                { arabic: 'مَفْتُوح', english: 'open', emoji: '🔓' },
-                { arabic: 'جَالِس', english: 'sitting', emoji: '🪑' },
-                { arabic: 'وَاقِف', english: 'standing', emoji: '🧍' },
-                { arabic: 'جَدِيد', english: 'new', emoji: '✨' },
-                { arabic: 'قَدِيم', english: 'old', emoji: '👴' }
+                { arabic: 'مَكْسُورٌ', english: 'broken', emoji: '💔' },
+                { arabic: 'مَفْتُوحٌ', english: 'open', emoji: '🔓' },
+                { arabic: 'جَالِسٌ', english: 'sitting', emoji: '🪑' },
+                { arabic: 'وَاقِفٌ', english: 'standing', emoji: '🧍' },
+                { arabic: 'جَدِيدٌ', english: 'new', emoji: '✨' },
+                { arabic: 'قَدِيمٌ', english: 'old', emoji: '📜' }
             ],
             5: [
-                { arabic: 'مَاء', english: 'water', emoji: '💧' },
-                { arabic: 'بَارِد', english: 'cold', emoji: '🧊' },
-                { arabic: 'قَرِيب', english: 'near', emoji: '📍' },
-                { arabic: 'بَعِيد', english: 'far', emoji: '🔭' },
-                { arabic: 'حَار', english: 'hot', emoji: '🔥' },
-                { arabic: 'صَغِير', english: 'small', emoji: '🔍' },
-                { arabic: 'كَبِير', english: 'big', emoji: '📏' },
-                { arabic: 'وَسِخ', english: 'dirty', emoji: '💩' },
-                { arabic: 'جَمِيل', english: 'beautiful', emoji: '✨' }
+                { arabic: 'مَاءٌ', english: 'water', emoji: '💧' },
+                { arabic: 'بَارِدٌ', english: 'cold', emoji: '❄️' },
+                { arabic: 'قَرِيبٌ', english: 'near', emoji: '📍' },
+                { arabic: 'بَعِيدٌ', english: 'far', emoji: '🌍' },
+                { arabic: 'حَارٌّ', english: 'hot', emoji: '🔥' },
+                { arabic: 'صَغِيرٌ', english: 'small', emoji: '🔍' },
+                { arabic: 'كَبِيرٌ', english: 'big', emoji: '📏' },
+                { arabic: 'وَسِخٌ', english: 'dirty', emoji: '💩' },
+                { arabic: 'جَمِيلٌ', english: 'beautiful', emoji: '✨' }
             ],
             6: [
-                { arabic: 'خُبْز', english: 'bread', emoji: '🍞' },
-                { arabic: 'عَيْن', english: 'eye', emoji: '👁️' },
-                { arabic: 'وَجْه', english: 'face', emoji: '😊' },
-                { arabic: 'صَدِيق', english: 'friend', emoji: '🤝' },
-                { arabic: 'سُؤَال', english: 'question', emoji: '❓' },
-                { arabic: 'جَوَاب', english: 'answer', emoji: '💬' },
-                { arabic: 'بَاب', english: 'door', emoji: '🚪' },
-                { arabic: 'سَمَاء', english: 'sky', emoji: '☁️' }
+                { arabic: 'خُبْزٌ', english: 'bread', emoji: '🍞' },
+                { arabic: 'عَيْنٌ', english: 'eye', emoji: '👁️' },
+                { arabic: 'وَجْهٌ', english: 'face', emoji: '😊' },
+                { arabic: 'صَدِيقٌ', english: 'friend', emoji: '🤝' },
+                { arabic: 'سُؤَالٌ', english: 'question', emoji: '❓' },
+                { arabic: 'جَوَابٌ', english: 'answer', emoji: '💬' },
+                { arabic: 'بَابٌ', english: 'door', emoji: '🚪' },
+                { arabic: 'سَمَاءٌ', english: 'sky', emoji: '☁️' }
             ],
             7: [
-                { arabic: 'طَوِيل', english: 'long/tall', emoji: '📏' },
-                { arabic: 'قَصِير', english: 'short', emoji: '📐' },
-                { arabic: 'ثَقِيل', english: 'heavy', emoji: '🏋️' },
-                { arabic: 'خَفِيف', english: 'light', emoji: '🪶' },
-                { arabic: 'نَظِيف', english: 'clean', emoji: '✨' },
-                { arabic: 'سَهْل', english: 'easy', emoji: '😊' },
-                { arabic: 'صَعْب', english: 'difficult', emoji: '😓' }
+                { arabic: 'طَوِيلٌ', english: 'long', emoji: '📏' },
+                { arabic: 'قَصِيرٌ', english: 'short', emoji: '📐' },
+                { arabic: 'ثَقِيلٌ', english: 'heavy', emoji: '⚖️' },
+                { arabic: 'خَفِيفٌ', english: 'light', emoji: '🪶' },
+                { arabic: 'نَظِيفٌ', english: 'clean', emoji: '✨' },
+                { arabic: 'سَهْلٌ', english: 'easy', emoji: '👍' },
+                { arabic: 'صَعْبٌ', english: 'difficult', emoji: '🤔' }
             ],
             8: [
-                { arabic: 'لَيْل', english: 'night', emoji: '🌙' },
-                { arabic: 'نَهَار', english: 'day', emoji: '☀️' },
-                { arabic: 'صَبَاح', english: 'morning', emoji: '🌅' },
-                { arabic: 'مَسَاء', english: 'evening', emoji: '🌆' }
+                { arabic: 'لَيْلٌ', english: 'night', emoji: '🌙' },
+                { arabic: 'نَهَارٌ', english: 'day', emoji: '☀️' },
+                { arabic: 'صَبَاحٌ', english: 'morning', emoji: '🌅' },
+                { arabic: 'مَسَاءٌ', english: 'evening', emoji: '🌆' }
             ],
             9: [
-                { arabic: 'غَنِي', english: 'rich', emoji: '💎' },
-                { arabic: 'فَقِير', english: 'poor', emoji: '💰' },
-                { arabic: 'كَرِيم', english: 'generous', emoji: '🎁' },
-                { arabic: 'بَخِيل', english: 'stingy', emoji: '🤏' },
-                { arabic: 'قَوِي', english: 'strong', emoji: '💪' },
-                { arabic: 'ضَعِيف', english: 'weak', emoji: '😔' }
+                { arabic: 'غَنِيٌّ', english: 'rich', emoji: '💰' },
+                { arabic: 'فَقِيرٌ', english: 'poor', emoji: '💸' },
+                { arabic: 'كَرِيمٌ', english: 'generous', emoji: '🎁' },
+                { arabic: 'بَخِيلٌ', english: 'stingy', emoji: '🚫' },
+                { arabic: 'قَوِيٌّ', english: 'strong', emoji: '💪' },
+                { arabic: 'ضَعِيفٌ', english: 'weak', emoji: '😔' }
             ],
             10: [
-                { arabic: 'إِسْم', english: 'name', emoji: '🏷️' },
-                { arabic: 'مَا لُغَتُكَ؟', english: 'what is your language?', emoji: '🗣️' },
-                { arabic: 'إِسْمِي', english: 'my name is', emoji: '👤' },
-                { arabic: 'مَا اسْمُهُ', english: 'what is his name?', emoji: '❓' },
-                { arabic: 'الأُرْدِيَّةُ', english: 'urdu', emoji: '🇵🇰' },
-                { arabic: 'مَعَ', english: 'with', emoji: '🤝' },
+                { arabic: 'إِسْمٌ', english: 'name', emoji: '🏷️' },
+                { arabic: 'خَالِدٌ', english: 'khalid', emoji: '👤' },
+                { arabic: 'مُحَمَّدٌ', english: 'muhammad', emoji: '👤' },
+                { arabic: 'عَلِيٌّ', english: 'ali', emoji: '👤' },
+                { arabic: 'حَامِدٌ', english: 'hamid', emoji: '👤' },
+                { arabic: 'عَرَبِيٌّ', english: 'arabic', emoji: '🇸🇦' },
+                { arabic: 'إِنْجْلِيزِيٌّ', english: 'english', emoji: '🇬🇧' },
+                { arabic: 'أُرْدِيَّةٌ', english: 'urdu', emoji: '🇵🇰' },
                 { arabic: 'زَمِيلٌ', english: 'colleague', emoji: '👥' },
                 { arabic: 'أَيْضًا', english: 'also', emoji: '➕' },
-                { arabic: 'اليَابَانِيَّةُ', english: 'japanese', emoji: '🇯🇵' },
-                { arabic: 'وَاحِد', english: 'one', emoji: '1️⃣' },
-                { arabic: 'الكُوَيْت', english: 'kuwait', emoji: '🇰🇼' },
-                { arabic: 'أُمُّكَ', english: 'your mother', emoji: '👩' },
-                { arabic: 'ذَهَبْتَ', english: 'i went', emoji: '🚶' },
-                { arabic: 'أَبُوهُ', english: 'his father', emoji: '👨' },
-                { arabic: 'أَعِنْدَكَ', english: 'do you have', emoji: '❓' },
-                { arabic: 'أُسَامَةُ', english: 'usaamah', emoji: '👤' },
-                { arabic: 'زَوْج', english: 'husband', emoji: '💍' },
-                { arabic: 'حَمْزَةُ', english: 'hamzah', emoji: '👤' },
-                { arabic: 'عِكْرِمَةُ', english: 'iqrimah', emoji: '👤' },
-                { arabic: 'أَخُوكَ', english: 'your brother', emoji: '👦' },
-                { arabic: 'لِي', english: 'i have', emoji: '✓' },
-                { arabic: 'لا مَا عِنْدِي', english: 'no i don\'t have', emoji: '✗' },
-                { arabic: 'مَحْمُود', english: 'mahmood', emoji: '👤' },
-                { arabic: 'طِفْلٌ', english: 'child', emoji: '👶' },
-                { arabic: 'لَهَا', english: 'she has', emoji: '✓' },
-                { arabic: 'الرِيَاض', english: 'riyadh', emoji: '🏙️' },
-                { arabic: 'الطَّائِف', english: 'taif', emoji: '🏙️' },
-                { arabic: 'طَلْحَةُ', english: 'talha', emoji: '👤' },
-                { arabic: 'مُعَاوِيَة', english: 'muaawiyah', emoji: '👤' },
-                { arabic: 'أُخْت', english: 'sister', emoji: '👧' }
+                { arabic: 'وَاحِدٌ', english: 'one', emoji: '1️⃣' },
+                { arabic: 'إِثْنَانِ', english: 'two', emoji: '2️⃣' },
+                { arabic: 'أُمٌّ', english: 'mother', emoji: '👩' },
+                { arabic: 'أَبٌ', english: 'father', emoji: '👨' },
+                { arabic: 'أَخٌ', english: 'brother', emoji: '👦' },
+                { arabic: 'أُخْتٌ', english: 'sister', emoji: '👧' }
             ],
             11: [
-                { arabic: 'أَمَام', english: 'infront', emoji: '⏩' },
-                { arabic: 'فِيهَا', english: 'in it (f)', emoji: '📦' },
-                { arabic: 'فِيهِ', english: 'in it (m)', emoji: '📦' },
-                { arabic: 'تَحْت', english: 'under', emoji: '⬇️' },
-                { arabic: 'مَفْتُوحَةٌ', english: 'open', emoji: '🔓' },
-                { arabic: 'عِنْدِي', english: 'i have', emoji: '✓' },
-                { arabic: 'خَرَجَت', english: 'she left', emoji: '🚪' },
-                { arabic: 'سُعَاد', english: 'suaad', emoji: '👤' },
-                { arabic: 'أُحِبُّ', english: 'i love', emoji: '❤️' },
-                { arabic: 'أَحَد', english: 'one', emoji: '1️⃣' },
-                { arabic: 'نَبِي', english: 'prophet', emoji: '🕌' },
-                { arabic: 'تُحِبّ', english: 'you love', emoji: '💕' },
-                { arabic: 'سَعْد', english: 'sad', emoji: '👤' }
+                { arabic: 'أَمَامَ', english: 'in front', emoji: '⬆️' },
+                { arabic: 'تَحْتَ', english: 'under', emoji: '⬇️' },
+                { arabic: 'فَوْقَ', english: 'above', emoji: '⬆️' },
+                { arabic: 'خَلْفَ', english: 'behind', emoji: '⬅️' },
+                { arabic: 'بَيْنَ', english: 'between', emoji: '↔️' },
+                { arabic: 'عَلَى', english: 'on', emoji: '📌' },
+                { arabic: 'فِي', english: 'in', emoji: '📍' },
+                { arabic: 'مِنْ', english: 'from', emoji: '⬅️' },
+                { arabic: 'إِلَى', english: 'to', emoji: '➡️' }
             ],
             12: [
-                { arabic: 'كَيْفَ حَالُكَ', english: 'how are you', emoji: '👋' },
-                { arabic: 'أَنَا بِخَيْرٍ', english: 'i am fine', emoji: '😊' },
-                { arabic: 'مُوَجِّه', english: 'director', emoji: '👔' },
-                { arabic: 'طَبِيبَةٌ', english: 'doctor (f)', emoji: '👩‍⚕️' },
-                { arabic: 'وِلادَةٌ', english: 'maternity', emoji: '🤱' },
-                { arabic: 'فَتَاةٌ', english: 'young woman', emoji: '👧' },
-                { arabic: 'شَجَرَةٌ', english: 'tree', emoji: '🌳' },
-                { arabic: 'سُورِيَا', english: 'syria', emoji: '🇸🇾' },
-                { arabic: 'المَدْرَسَةُ المُتَوَسِّطَة', english: 'middle school', emoji: '🏫' },
-                { arabic: 'مُفَتَّش', english: 'inspector', emoji: '🔍' },
-                { arabic: 'أَنْتِ', english: 'you (f)', emoji: '👩' },
-                { arabic: 'بِلالٌ', english: 'bilal', emoji: '👤' },
-                { arabic: 'قَوِيّ', english: 'strong', emoji: '💪' },
-                { arabic: 'أَقْوِيَاء', english: 'strong (pl)', emoji: '💪' },
-                { arabic: 'بَعْد', english: 'after', emoji: '⏭️' },
-                { arabic: 'السَّلامُ عَلَيْكُمْ', english: 'peace be upon you', emoji: '☮️' },
-                { arabic: 'أُسْتَاذِي', english: 'my teacher', emoji: '👨‍🏫' },
-                { arabic: 'مَالِيزِيَا', english: 'malaysia', emoji: '🇲🇾' },
-                { arabic: 'التِي', english: 'who/which (f)', emoji: '❓' },
-                { arabic: 'آبَاءٌ', english: 'fathers', emoji: '👨' },
-                { arabic: 'شَيْخ', english: 'scholar', emoji: '📚' },
-                { arabic: 'شُيُوخ', english: 'scholars', emoji: '📚' },
-                { arabic: 'ضِعَاف', english: 'weak (pl)', emoji: '😔' },
-                { arabic: 'عَمَّةٌ', english: 'paternal aunt', emoji: '👩' },
-                { arabic: 'خَالَةٌ', english: 'maternal aunt', emoji: '👩' },
-                { arabic: 'سَيِّد', english: 'sir', emoji: '🎩' },
-                { arabic: 'سَيِّدَةٌ', english: 'madam', emoji: '👒' },
-                { arabic: 'أُمّ', english: 'mother', emoji: '👩' },
-                { arabic: 'أُمَّهَات', english: 'mothers', emoji: '👩' },
-                { arabic: 'وَزِير', english: 'minister', emoji: '🏛️' },
-                { arabic: 'وُزَراء', english: 'ministers', emoji: '🏛️' },
-                { arabic: 'المَمْلَكَةُ العَرَبِيَّة', english: 'kingdom of saudi arabia', emoji: '🇸🇦' }
+                { arabic: 'أَنَا', english: 'i', emoji: '👤' },
+                { arabic: 'نَحْنُ', english: 'we', emoji: '👥' },
+                { arabic: 'أَنْتَ', english: 'you (m)', emoji: '👤' },
+                { arabic: 'أَنْتِ', english: 'you (f)', emoji: '👤' },
+                { arabic: 'أَنْتُمَا', english: 'you two', emoji: '👥' },
+                { arabic: 'أَنْتُمْ', english: 'you (pl m)', emoji: '👥' },
+                { arabic: 'أَنْتُنَّ', english: 'you (pl f)', emoji: '👥' },
+                { arabic: 'هُوَ', english: 'he', emoji: '👤' },
+                { arabic: 'هِيَ', english: 'she', emoji: '👤' },
+                { arabic: 'هُمَا', english: 'they two', emoji: '👥' },
+                { arabic: 'هُمْ', english: 'they (m)', emoji: '👥' },
+                { arabic: 'هُنَّ', english: 'they (f)', emoji: '👥' }
             ],
             13: [
                 { arabic: 'فَقِيرٌ', english: 'poor', emoji: '💰' },
@@ -719,389 +684,178 @@
                 { arabic: 'أَصْدِقَاءُ', english: 'friends', emoji: '👥' },
                 { arabic: 'طَبِيبٌ', english: 'doctor', emoji: '👨‍⚕️' },
                 { arabic: 'أَطِبَّاءُ', english: 'doctors', emoji: '👨‍⚕️' },
-                { arabic: 'فَتًى', english: 'young man', emoji: '👦' },
-                { arabic: 'فِتْيَةٌ', english: 'young men', emoji: '👦' },
                 { arabic: 'أَخٌ', english: 'brother', emoji: '👦' },
                 { arabic: 'إِخْوَةٌ', english: 'brothers', emoji: '👦' },
-                { arabic: 'جُدُدٌ', english: 'new (pl)', emoji: '✨' },
                 { arabic: 'مُدَرِّسٌ', english: 'teacher', emoji: '👨‍🏫' },
                 { arabic: 'مُدَرِّسُونَ', english: 'teachers', emoji: '👨‍🏫' },
-                { arabic: 'مُهَنْدِسٌ', english: 'engineer', emoji: '⚙️' },
-                { arabic: 'مُهَنْدِسُونَ', english: 'engineers', emoji: '⚙️' },
-                { arabic: 'فَلاَّحٌ', english: 'farmer', emoji: '👨‍🌾' },
-                { arabic: 'فَلاَّحُونَ', english: 'farmers', emoji: '👨‍🌾' },
-                { arabic: 'مُجْتَهِدٌ', english: 'hardworking', emoji: '💼' },
-                { arabic: 'هَؤُلاءِ', english: 'these', emoji: '👉' },
-                { arabic: 'بَعْضُهُمْ', english: 'some of them', emoji: '👥' },
                 { arabic: 'طَالِبٌ', english: 'student', emoji: '📚' },
                 { arabic: 'طُلاَّبٌ', english: 'students', emoji: '📚' },
-                { arabic: 'تَاجِرٌ', english: 'merchant', emoji: '🛒' },
-                { arabic: 'تُجَّارٌ', english: 'merchants', emoji: '🛒' },
-                { arabic: 'حَاجٌّ', english: 'pilgrim', emoji: '🕋' },
-                { arabic: 'حُجَّاجٌ', english: 'pilgrims', emoji: '🕋' },
                 { arabic: 'رَجُلٌ', english: 'man', emoji: '👨' },
                 { arabic: 'رِجَالٌ', english: 'men', emoji: '👨' },
                 { arabic: 'كَبِيرٌ', english: 'big', emoji: '📏' },
                 { arabic: 'كِبَارٌ', english: 'big (pl)', emoji: '📏' },
                 { arabic: 'صَغِيرٌ', english: 'small', emoji: '🔍' },
                 { arabic: 'صِغَارٌ', english: 'small (pl)', emoji: '🔍' },
-                { arabic: 'قَصِيرٌ', english: 'short', emoji: '📐' },
-                { arabic: 'قِصَارٌ', english: 'short (pl)', emoji: '📐' },
-                { arabic: 'طَوِيلٌ', english: 'tall', emoji: '📏' },
-                { arabic: 'طِوَالٌ', english: 'tall (pl)', emoji: '📏' },
                 { arabic: 'وَلَدٌ', english: 'boy', emoji: '👦' },
                 { arabic: 'أَوْلادٌ', english: 'boys', emoji: '👦' },
-                { arabic: 'مُجْتَهِدُونَ', english: 'hardworking (pl)', emoji: '💼' },
-                { arabic: 'مُسْلِمٌ', english: 'muslim', emoji: '🕌' },
-                { arabic: 'مُسْلِمُونَ', english: 'muslims', emoji: '🕌' },
-                { arabic: 'مَلْعَبٌ', english: 'playground', emoji: '⚽' },
-                { arabic: 'الإِبْتِدَائِيَّةُ', english: 'primary', emoji: '🏫' },
-                { arabic: 'نَجْمٌ', english: 'star', emoji: '⭐' },
-                { arabic: 'نُجُومٌ', english: 'stars', emoji: '⭐' },
-                { arabic: 'مُسْلِمَةٌ', english: 'muslim (f)', emoji: '🕌' },
-                { arabic: 'مُسْلِمَاتٌ', english: 'muslims (f)', emoji: '🕌' },
-                { arabic: 'زَوْجَةٌ', english: 'wife', emoji: '💍' },
-                { arabic: 'زَوْجَاتٌ', english: 'wives', emoji: '💍' },
-                { arabic: 'أُخْتٌ', english: 'sister', emoji: '👧' },
-                { arabic: 'أَخَوَاتٌ', english: 'sisters', emoji: '👧' },
-                { arabic: 'فَتَاةٌ', english: 'young woman', emoji: '👧' },
-                { arabic: 'فَتَيَاتٌ', english: 'young women', emoji: '👧' },
-                { arabic: 'جَدِيدَةٌ', english: 'new (f)', emoji: '✨' },
-                { arabic: 'كَبِيرَةٌ', english: 'big (f)', emoji: '📏' },
-                { arabic: 'صَغِيرَةٌ', english: 'small (f)', emoji: '🔍' },
-                { arabic: 'طَوِيلَةٌ', english: 'tall (f)', emoji: '📏' },
-                { arabic: 'مُمَرِّضَةٌ', english: 'nurse', emoji: '👩‍⚕️' },
-                { arabic: 'مُمَرِّضَاتٌ', english: 'nurses', emoji: '👩‍⚕️' },
-                { arabic: 'إِبْنٌ', english: 'son', emoji: '👦' },
-                { arabic: 'أَبْنَاءٌ', english: 'sons', emoji: '👦' },
-                { arabic: 'عَمٌّ', english: 'paternal uncle', emoji: '👨' },
-                { arabic: 'أَعْمَامٌ', english: 'paternal uncles', emoji: '👨' },
-                { arabic: 'ضَيْفٌ', english: 'guest', emoji: '🎭' },
-                { arabic: 'ضُيُوفٌ', english: 'guests', emoji: '🎭' },
-                { arabic: 'زَمِيلٌ', english: 'colleague', emoji: '👥' },
-                { arabic: 'زُمَلاءُ', english: 'colleagues', emoji: '👥' },
                 { arabic: 'كِتَابٌ', english: 'book', emoji: '📖' },
                 { arabic: 'كُتُبٌ', english: 'books', emoji: '📚' },
-                { arabic: 'جَبَلٌ', english: 'mountain', emoji: '⛰️' },
-                { arabic: 'جِبَالٌ', english: 'mountains', emoji: '⛰️' },
                 { arabic: 'قَلَمٌ', english: 'pen', emoji: '✒️' },
                 { arabic: 'أَقْلامٌ', english: 'pens', emoji: '✒️' },
-                { arabic: 'هُمْ', english: 'they (m)', emoji: '👥' },
-                { arabic: 'بَعْضٌ', english: 'some', emoji: '➗' },
-                { arabic: 'قَرْيَةٌ', english: 'village', emoji: '🏘️' },
-                { arabic: 'إِسْمٌ', english: 'name', emoji: '🏷️' },
-                { arabic: 'أَسْمَاءٌ', english: 'names', emoji: '🏷️' },
-                { arabic: 'نَاسٌ', english: 'people', emoji: '👥' },
-                { arabic: 'ذَهَبْنَ', english: 'they went (f)', emoji: '🚶' },
-                { arabic: 'مَطْعَمٌ', english: 'restaurant', emoji: '🍽️' },
-                { arabic: 'حَقْلٌ', english: 'field', emoji: '🌾' },
-                { arabic: 'حُقُولٌ', english: 'fields', emoji: '🌾' },
-                { arabic: 'هُنَّ', english: 'they (f)', emoji: '👥' },
-                { arabic: 'بَنَاتٌ', english: 'daughters', emoji: '👧' },
-                { arabic: 'طَبِيبَةٌ', english: 'doctor (f)', emoji: '👩‍⚕️' },
-                { arabic: 'طَبِيبَاتٌ', english: 'doctors (f)', emoji: '👩‍⚕️' },
-                { arabic: 'مُدَرِّسَةٌ', english: 'teacher (f)', emoji: '👩‍🏫' },
-                { arabic: 'مُدَرِّسَاتٌ', english: 'teachers (f)', emoji: '👩‍🏫' },
-                { arabic: 'دُكْتُورَاتٌ', english: 'lady professors', emoji: '👩‍🏫' },
-                { arabic: 'زَوْجٌ', english: 'husband', emoji: '💍' },
-                { arabic: 'أَزْوَاجٌ', english: 'husbands', emoji: '💍' },
-                { arabic: 'بَعْضُهُنَّ', english: 'some of them (f)', emoji: '👥' },
-                { arabic: 'تُرْكِيَا', english: 'turkey', emoji: '🇹🇷' },
-                { arabic: 'لَيْلَى', english: 'laila', emoji: '👤' },
-                { arabic: 'إِمْرَأَةٌ', english: 'woman', emoji: '👩' },
-                { arabic: 'نِسَاءٌ', english: 'women', emoji: '👩' },
-                { arabic: 'دُكْتُورَةٌ', english: 'lady professor', emoji: '👩‍🏫' },
-                { arabic: 'أُولَئِكَ', english: 'those', emoji: '👉' },
-                { arabic: 'عَالِمٌ', english: 'scholar', emoji: '👴' },
-                { arabic: 'عُلَمَاءُ', english: 'scholars', emoji: '👴' }
+                { arabic: 'مُسْلِمٌ', english: 'muslim', emoji: '🕌' },
+                { arabic: 'مُسْلِمُونَ', english: 'muslims', emoji: '🕌' }
             ],
             14: [
-                { arabic: 'أَنْتُم', english: 'you (pl.m)', emoji: '👥' },
-                { arabic: 'أَنَا', english: 'i', emoji: '🙋' },
-                { arabic: 'نَحْنُ', english: 'we', emoji: '👥' },
-                { arabic: 'بَيْتُنَا', english: 'our house', emoji: '🏠' },
-                { arabic: 'إِخْوَانٌ', english: 'brothers', emoji: '👦' },
-                { arabic: 'اللهُ رَبُّنَا', english: 'allah is our lord', emoji: '🕌' },
-                { arabic: 'الإِسْلام دِينُنَا', english: 'islam is our religion', emoji: '☪️' },
-                { arabic: 'مُحَمَّد نَبِيُّنَا', english: 'muhammad is our prophet', emoji: '🕌' },
-                { arabic: 'ذَهَبْتُم', english: 'you went (pl.m)', emoji: '🚶' },
-                { arabic: 'ذَهَبَ', english: 'he went', emoji: '🚶' },
-                { arabic: 'بَلَد', english: 'country', emoji: '🌍' },
-                { arabic: 'بِلاد', english: 'countries', emoji: '🌍' },
-                { arabic: 'وِلْيَم', english: 'william', emoji: '👤' },
-                { arabic: 'هِتْلَر', english: 'hitler', emoji: '👤' },
-                { arabic: 'لُنْدَن', english: 'london', emoji: '🇬🇧' },
-                { arabic: 'آدَم', english: 'adam', emoji: '👤' },
-                { arabic: 'اليُونَان', english: 'greece', emoji: '🇬🇷' },
-                { arabic: 'طِفْلَة', english: 'child (f)', emoji: '👶' },
-                { arabic: 'مَطَار', english: 'airport', emoji: '✈️' },
-                { arabic: 'دُكْتُور', english: 'professor', emoji: '👨‍⚕️' },
-                { arabic: 'اليَوْم', english: 'the day', emoji: '📅' },
-                { arabic: 'لِزِيَارَةِ', english: 'to visit', emoji: '🚪' },
-                { arabic: 'إِدْوَرْد', english: 'edward', emoji: '👤' },
-                { arabic: 'بَارِيس', english: 'paris', emoji: '🇫🇷' },
-                { arabic: 'بَاكِسْتَان', english: 'pakistan', emoji: '🇵🇰' },
-                { arabic: 'إِسْطَنْبُول', english: 'istanbul', emoji: '🇹🇷' },
-                { arabic: 'أَيُوب', english: 'ayub', emoji: '👤' },
-                { arabic: 'سُلَيْمَان', english: 'sulaiman', emoji: '👤' },
-                { arabic: 'دَاوُد', english: 'dawud', emoji: '👤' },
-                { arabic: 'يُونُس', english: 'yunus', emoji: '👤' },
-                { arabic: 'إِدْرِيس', english: 'idrees', emoji: '👤' },
-                { arabic: 'جِبْرَائِيل', english: 'jibraeel', emoji: '👼' },
-                { arabic: 'مِيكَائِيل', english: 'mikaeel', emoji: '👼' },
-                { arabic: 'فِرْعَوْن', english: 'pharaoh', emoji: '👑' },
-                { arabic: 'أَيّ', english: 'which', emoji: '❓' },
-                { arabic: 'إِبْرَاهِيم', english: 'ibraheem', emoji: '👤' },
-                { arabic: 'إِسْحَاق', english: 'ishaaq', emoji: '👤' },
-                { arabic: 'إِسْمَاعِيل', english: 'ismaeel', emoji: '👤' },
-                { arabic: 'يَعْقُوب', english: 'yaqub', emoji: '👤' },
-                { arabic: 'كُلِّيَةٌ', english: 'faculty', emoji: '🎓' },
-                { arabic: 'كُلِّيَة الطِّبّ', english: 'faculty of medicine', emoji: '⚕️' },
-                { arabic: 'كُلِّيَة الهَنْدَسَة', english: 'faculty of engineering', emoji: '⚙️' },
-                { arabic: 'كُلِّيَة التِّجَارَة', english: 'faculty of commerce', emoji: '💼' },
-                { arabic: 'كُلِّيَة الشَّرِيعَة', english: 'faculty of islamic law', emoji: '⚖️' },
-                { arabic: 'نَصْرَانِي', english: 'christian', emoji: '✝️' },
-                { arabic: 'نَصَارَى', english: 'christians', emoji: '✝️' },
-                { arabic: 'دِين', english: 'religion', emoji: '☪️' },
-                { arabic: 'شَهْر', english: 'month', emoji: '📅' },
-                { arabic: 'شَهْر رَجَب', english: 'month of rajab', emoji: '🌙' },
-                { arabic: 'شَفَاهُ الله', english: 'may allah cure him', emoji: '🤲' },
-                { arabic: 'نُوح', english: 'nuh', emoji: '👤' },
-                { arabic: 'لُوطٌ', english: 'lut', emoji: '👤' },
-                { arabic: 'جُرْج', english: 'george', emoji: '👤' },
-                { arabic: 'خَانٌ', english: 'khan', emoji: '👤' },
-                { arabic: 'دُسْتُور', english: 'constitution', emoji: '📜' },
-                { arabic: 'قِبْلَةٌ', english: 'pray direction', emoji: '🧭' },
-                { arabic: 'مَحْكَمَةٌ', english: 'law court', emoji: '⚖️' },
-                { arabic: 'حَفِيد', english: 'grandson', emoji: '👦' },
-                { arabic: 'حَفَدَةٌ', english: 'grandsons', emoji: '👦' },
-                { arabic: 'حَدِيقَةٌ', english: 'garden', emoji: '🌳' },
-                { arabic: 'رَبّ', english: 'lord', emoji: '👑' },
-                { arabic: 'يَوْم السَّبْت', english: 'saturday', emoji: '📅' }
+                { arabic: 'ذَهَبَ', english: 'went', emoji: '🚶' },
+                { arabic: 'جَلَسَ', english: 'sat', emoji: '🪑' },
+                { arabic: 'فَتَحَ', english: 'opened', emoji: '🔓' },
+                { arabic: 'شَرِبَ', english: 'drank', emoji: '🥤' },
+                { arabic: 'أَكَلَ', english: 'ate', emoji: '🍽️' },
+                { arabic: 'دَرَسَ', english: 'studied', emoji: '📚' },
+                { arabic: 'كَتَبَ', english: 'wrote', emoji: '✍️' },
+                { arabic: 'قَرَأَ', english: 'read', emoji: '📖' },
+                { arabic: 'خَرَجَ', english: 'went out', emoji: '🚪' },
+                { arabic: 'دَخَلَ', english: 'entered', emoji: '🚪' }
             ],
             15: [
-                { arabic: 'قَبْلَ', english: 'before', emoji: '⏮️' },
+                { arabic: 'قَبْلَ', english: 'before', emoji: '⏪' },
+                { arabic: 'بَعْدَ', english: 'after', emoji: '⏩' },
+                { arabic: 'مَتَى', english: 'when', emoji: '🕐' },
+                { arabic: 'أَيْنَ', english: 'where', emoji: '📍' },
                 { arabic: 'كَيْفَ', english: 'how', emoji: '❓' },
-                { arabic: 'مَتَى', english: 'when', emoji: '⏰' },
-                { arabic: 'أَذَانٌ', english: 'adhan', emoji: '📢' },
-                { arabic: 'صَلاةٌ', english: 'prayer', emoji: '🤲' },
-                { arabic: 'رَجَعَ', english: 'he returned', emoji: '↩️' },
-                { arabic: 'دَرْس', english: 'lesson', emoji: '📖' },
-                { arabic: 'أَنْتُنَّ', english: 'you (pl.f)', emoji: '👥' },
-                { arabic: 'إِخْتِبَار', english: 'examination', emoji: '📝' },
-                { arabic: 'القَاهِرَة', english: 'cairo', emoji: '🇪🇬' },
-                { arabic: 'أُسْبُوع', english: 'week', emoji: '📅' }
+                { arabic: 'مَاذَا', english: 'what', emoji: '❓' },
+                { arabic: 'مَنْ', english: 'who', emoji: '👤' },
+                { arabic: 'لِمَاذَا', english: 'why', emoji: '❓' }
             ],
             16: [
-                { arabic: 'سُوق', english: 'market', emoji: '🛒' },
-                { arabic: 'أَسْوَاق', english: 'markets', emoji: '🛒' },
-                { arabic: 'مَكْتَبَة', english: 'library', emoji: '📚' },
-                { arabic: 'مَكْتَبَات', english: 'libraries', emoji: '📚' },
-                { arabic: 'جَامِعَة', english: 'university', emoji: '🎓' },
-                { arabic: 'جَامِعَات', english: 'universities', emoji: '🎓' }
+                { arabic: 'مَدِينَةٌ', english: 'city', emoji: '🏙️' },
+                { arabic: 'قَرْيَةٌ', english: 'village', emoji: '🏘️' },
+                { arabic: 'سُوقٌ', english: 'market', emoji: '🛒' },
+                { arabic: 'مَطَارٌ', english: 'airport', emoji: '✈️' },
+                { arabic: 'مَحَطَّةٌ', english: 'station', emoji: '🚉' },
+                { arabic: 'جَامِعَةٌ', english: 'university', emoji: '🎓' },
+                { arabic: 'مَدْرَسَةٌ', english: 'school', emoji: '🏫' },
+                { arabic: 'مَكْتَبَةٌ', english: 'library', emoji: '📚' },
+                { arabic: 'مُسْتَشْفَى', english: 'hospital', emoji: '🏥' },
+                { arabic: 'فُنْدُقٌ', english: 'hotel', emoji: '🏨' }
             ],
             17: [
-                { arabic: 'لُغَةٌ', english: 'language', emoji: '🗣️' },
-                { arabic: 'لُغَات', english: 'languages', emoji: '🗣️' },
-                { arabic: 'كَثِيرَةٌ', english: 'many', emoji: '➕' },
-                { arabic: 'مَكْسُورَةٌ', english: 'broken', emoji: '💔' },
-                { arabic: 'رَخِيصَةٌ', english: 'cheap', emoji: '💰' },
-                { arabic: 'شَارِع', english: 'street', emoji: '🛣️' },
-                { arabic: 'مَنَادِيل', english: 'handkerchiefs', emoji: '🧻' },
-                { arabic: 'شَرِكَةٌ', english: 'company', emoji: '🏢' },
-                { arabic: 'شَرِكَات', english: 'companies', emoji: '🏢' },
-                { arabic: 'قُمْصَانٌ', english: 'shirts', emoji: '👔' },
-                { arabic: 'مُدِير الشَّرِكَة', english: 'director of company', emoji: '👔' }
+                { arabic: 'سَعُودِيَّةٌ', english: 'saudi arabia', emoji: '🇸🇦' },
+                { arabic: 'بَاكِسْتَانُ', english: 'pakistan', emoji: '🇵🇰' },
+                { arabic: 'مِصْرُ', english: 'egypt', emoji: '🇪🇬' },
+                { arabic: 'تُرْكِيَا', english: 'turkey', emoji: '🇹🇷' },
+                { arabic: 'الهِنْدُ', english: 'india', emoji: '🇮🇳' },
+                { arabic: 'اليَابَانُ', english: 'japan', emoji: '🇯🇵' },
+                { arabic: 'أَمْرِيكَا', english: 'america', emoji: '🇺🇸' },
+                { arabic: 'بَرِيطَانِيَا', english: 'britain', emoji: '🇬🇧' },
+                { arabic: 'مَكَّةُ', english: 'makkah', emoji: '🕋' },
+                { arabic: 'المَدِينَةُ', english: 'madinah', emoji: '🕌' }
             ],
             18: [
-                { arabic: 'عِيد الفِطْر', english: 'eid ul fitr', emoji: '🌙' },
-                { arabic: 'عِيد الأَضْحَى', english: 'eid ul adha', emoji: '🐑' },
-                { arabic: 'هَذَانِ', english: 'this is (dual m)', emoji: '👉' },
-                { arabic: 'هَاتَانِ', english: 'this is (dual f)', emoji: '👉' },
-                { arabic: 'هُمَا', english: 'they (dual)', emoji: '👥' },
-                { arabic: 'كَم', english: 'how many', emoji: '🔢' },
-                { arabic: 'أَخَوَانٌ', english: 'two brothers', emoji: '👦👦' },
-                { arabic: 'رِيَالٌ', english: 'riyal', emoji: '💵' },
-                { arabic: 'مَتْجَر', english: 'business', emoji: '🏪' },
-                { arabic: 'رَكْعَةٌ', english: 'rakah', emoji: '🤲' },
-                { arabic: 'رَكَعَات', english: 'rakahs', emoji: '🤲' },
-                { arabic: 'عَجَلَةٌ', english: 'wheel', emoji: '🎡' },
-                { arabic: 'عِيد', english: 'festival', emoji: '🎉' },
-                { arabic: 'سَنَةٌ', english: 'year', emoji: '📅' },
-                { arabic: 'نَافِذَةٌ', english: 'window', emoji: '🪟' },
-                { arabic: 'مِسْطَرَةٌ', english: 'ruler', emoji: '📏' },
-                { arabic: 'حَي', english: 'area', emoji: '🏘️' },
-                { arabic: 'أَحْيَاءٌ', english: 'areas', emoji: '🏘️' },
-                { arabic: 'عَجَلات', english: 'wheels', emoji: '🎡' },
-                { arabic: 'رِيَالات', english: 'riyals', emoji: '💵' },
-                { arabic: 'مَسَاطِر', english: 'rulers', emoji: '📏' }
+                { arabic: 'وَاحِدٌ', english: 'one', emoji: '1️⃣' },
+                { arabic: 'إِثْنَانِ', english: 'two', emoji: '2️⃣' },
+                { arabic: 'ثَلاثَةٌ', english: 'three', emoji: '3️⃣' },
+                { arabic: 'أَرْبَعَةٌ', english: 'four', emoji: '4️⃣' },
+                { arabic: 'خَمْسَةٌ', english: 'five', emoji: '5️⃣' },
+                { arabic: 'سِتَّةٌ', english: 'six', emoji: '6️⃣' },
+                { arabic: 'سَبْعَةٌ', english: 'seven', emoji: '7️⃣' },
+                { arabic: 'ثَمَانِيَةٌ', english: 'eight', emoji: '8️⃣' },
+                { arabic: 'تِسْعَةٌ', english: 'nine', emoji: '9️⃣' },
+                { arabic: 'عَشَرَةٌ', english: 'ten', emoji: '🔟' },
+                { arabic: 'عِيدٌ', english: 'festival', emoji: '🎉' },
+                { arabic: 'يَوْمٌ', english: 'day', emoji: '📅' }
             ],
             19: [
-                { arabic: 'رَاكِب', english: 'passenger', emoji: '🚌' },
-                { arabic: 'رُكَّاب', english: 'passengers', emoji: '🚌' },
-                { arabic: 'قُدَامَى', english: 'old (pl)', emoji: '👴' },
-                { arabic: 'جَيْب', english: 'pocket', emoji: '👖' },
-                { arabic: 'كُلّ', english: 'all', emoji: '💯' },
-                { arabic: 'كُلُّهُم', english: 'all of them', emoji: '👥' },
-                { arabic: 'كُلُّكُم', english: 'all of you', emoji: '👥' },
-                { arabic: 'كُلُّنَا', english: 'all of us', emoji: '👥' },
-                { arabic: 'مُخْتَلِف', english: 'different', emoji: '🔀' },
-                { arabic: 'حَافِلَةٌ', english: 'bus', emoji: '🚌' },
-                { arabic: 'مِنْهُم', english: 'from them', emoji: '👥' },
-                { arabic: 'أُورُبَّا', english: 'europe', emoji: '🌍' },
-                { arabic: 'يُوغُسْلافِيَا', english: 'yugoslavia', emoji: '🗺️' },
-                { arabic: 'أَسْئِلَةٌ', english: 'questions', emoji: '❓' },
-                { arabic: 'حَافِلات', english: 'buses', emoji: '🚌' },
-                { arabic: 'جُيُوب', english: 'pockets', emoji: '👖' },
-                { arabic: 'عَشَرَةٌ', english: 'ten (f)', emoji: '🔟' },
-                { arabic: 'ثَلاثَةٌ', english: 'three (f)', emoji: '3️⃣' },
-                { arabic: 'أَرْبَعَةٌ', english: 'four (f)', emoji: '4️⃣' },
-                { arabic: 'سَبْعَةٌ', english: 'seven (f)', emoji: '7️⃣' },
-                { arabic: 'خَمْسَةٌ', english: 'five', emoji: '5️⃣' },
-                { arabic: 'ثَمَانِيَةٌ', english: 'eight (f)', emoji: '8️⃣' },
-                { arabic: 'سِتَّةٌ', english: 'six (f)', emoji: '6️⃣' },
-                { arabic: 'تِسْعَةٌ', english: 'nine (f)', emoji: '9️⃣' },
-                { arabic: 'إِثْنَانِ', english: 'two (m)', emoji: '2️⃣' },
-                { arabic: 'شُكْرًا', english: 'thanks', emoji: '🙏' },
-                { arabic: 'أَيَّام', english: 'days', emoji: '📅' },
-                { arabic: 'ثَمَن', english: 'price', emoji: '💰' },
-                { arabic: 'نِصْف', english: 'half', emoji: '½' },
-                { arabic: 'قِرْش', english: 'one tenth riyal', emoji: '💰' },
-                { arabic: 'قُرُوش', english: 'one tenth riyals', emoji: '💰' }
+                { arabic: 'جِسْرٌ', english: 'bridge', emoji: '🌉' },
+                { arabic: 'نَهْرٌ', english: 'river', emoji: '🌊' },
+                { arabic: 'بَحْرٌ', english: 'sea', emoji: '🌊' },
+                { arabic: 'شَجَرَةٌ', english: 'tree', emoji: '🌳' },
+                { arabic: 'زَهْرَةٌ', english: 'flower', emoji: '🌸' },
+                { arabic: 'حَدِيقَةٌ', english: 'garden', emoji: '🏡' },
+                { arabic: 'شَمْسٌ', english: 'sun', emoji: '☀️' },
+                { arabic: 'قَمَرٌ', english: 'moon', emoji: '🌙' },
+                { arabic: 'نَجْمٌ', english: 'star', emoji: '⭐' }
             ],
             20: [
-                { arabic: 'ثَلاث بَنَات', english: 'three daughters', emoji: '👧' },
-                { arabic: 'أَرْبَع أَخَوَات', english: 'four sisters', emoji: '👧' },
-                { arabic: 'خَمْس أُمَّهَات', english: 'five mothers', emoji: '👩' },
-                { arabic: 'سِتّ نِسَاء', english: 'six women', emoji: '👩' },
-                { arabic: 'سَبْع طَالِبَات', english: 'seven students (f)', emoji: '📚' },
-                { arabic: 'ثَمَان غُرُف', english: 'eight rooms', emoji: '🚪' },
-                { arabic: 'إِثْنَتَانِ', english: 'two (f)', emoji: '2️⃣' },
-                { arabic: 'وَاحِدَةٌ', english: 'one (f)', emoji: '1️⃣' },
-                { arabic: 'دَجَاجَةٌ', english: 'chicken', emoji: '🐔' },
-                { arabic: 'دَجَاجَات', english: 'chickens', emoji: '🐔' },
-                { arabic: 'كُلِّيَات', english: 'faculties', emoji: '🎓' },
-                { arabic: 'عَمَّات', english: 'paternal aunts', emoji: '👩' },
-                { arabic: 'غُرُف', english: 'rooms', emoji: '🚪' },
-                { arabic: 'سَلْمَى', english: 'salma', emoji: '👤' },
-                { arabic: 'ثَلاثَة أَبْنَاء', english: 'three sons', emoji: '👦' },
-                { arabic: 'أَرْبَعَة إِخْوَة', english: 'four brothers', emoji: '👦' },
-                { arabic: 'خَمْسَة آبَاء', english: 'five fathers', emoji: '👨' },
-                { arabic: 'سِتَّة رِجَال', english: 'six men', emoji: '👨' },
-                { arabic: 'سَبْعَة طُلاَّب', english: 'seven students', emoji: '📚' },
-                { arabic: 'ثَمَانِيَة بُيُوت', english: 'eight houses', emoji: '🏠' },
-                { arabic: 'عَشَر', english: 'ten (m)', emoji: '🔟' },
-                { arabic: 'كَلِمَةٌ', english: 'word', emoji: '💬' },
-                { arabic: 'كَلِمَات', english: 'words', emoji: '💬' },
-                { arabic: 'مَجَلَّةٌ', english: 'magazine', emoji: '📰' },
-                { arabic: 'مَجَلاَّت', english: 'magazines', emoji: '📰' },
-                { arabic: 'حَرْف', english: 'letter', emoji: '🔤' },
-                { arabic: 'حُرُوف', english: 'letters', emoji: '🔤' }
+                { arabic: 'أُسْبُوعٌ', english: 'week', emoji: '📅' },
+                { arabic: 'شَهْرٌ', english: 'month', emoji: '📆' },
+                { arabic: 'سَنَةٌ', english: 'year', emoji: '📅' },
+                { arabic: 'الأَحَدُ', english: 'sunday', emoji: '📅' },
+                { arabic: 'الإِثْنَيْنِ', english: 'monday', emoji: '📅' },
+                { arabic: 'الثُّلاثَاءُ', english: 'tuesday', emoji: '📅' },
+                { arabic: 'الأَرْبِعَاءُ', english: 'wednesday', emoji: '📅' },
+                { arabic: 'الخَمِيسُ', english: 'thursday', emoji: '📅' },
+                { arabic: 'الجُمُعَةُ', english: 'friday', emoji: '📅' },
+                { arabic: 'السَّبْتُ', english: 'saturday', emoji: '📅' }
             ],
             21: [
-                { arabic: 'كَثِيرًا', english: 'very much', emoji: '➕' },
-                { arabic: 'أَم', english: 'or', emoji: '❓' },
-                { arabic: 'مُغَلَّقَةٌ', english: 'closed', emoji: '🔒' },
-                { arabic: 'إِفْرِيقِيَا', english: 'africa', emoji: '🌍' },
-                { arabic: 'مَكَاتِب', english: 'desks', emoji: '🪑' },
-                { arabic: 'كَرَاسِي', english: 'chairs', emoji: '🪑' },
-                { arabic: 'ذَاكَ', english: 'that', emoji: '👉' },
-                { arabic: 'لَوْنٌ', english: 'colour', emoji: '🎨' },
-                { arabic: 'أَلْوَانٌ', english: 'colours', emoji: '🎨' },
-                { arabic: 'نُحِبّ', english: 'we love', emoji: '❤️' },
-                { arabic: 'نُحِبُّه', english: 'we love him', emoji: '❤️' },
-                { arabic: 'آسِيَا', english: 'asia', emoji: '🌏' },
-                { arabic: 'وَاسِع', english: 'spacious', emoji: '📏' },
-                { arabic: 'قَرِيبَةٌ', english: 'near', emoji: '📍' },
-                { arabic: 'فَصْلٌ', english: 'classroom', emoji: '🏫' },
-                { arabic: 'فُصُولٌ', english: 'classrooms', emoji: '🏫' },
-                { arabic: 'نَافِذَتَانِ', english: 'two windows', emoji: '🪟' },
-                { arabic: 'أَحْمَد', english: 'ahmad', emoji: '👤' },
-                { arabic: 'غَانَا', english: 'ghana', emoji: '🇬🇭' },
-                { arabic: 'نِيجِيرِيَا', english: 'nigeria', emoji: '🇳🇬' },
-                { arabic: 'بَيْرَم', english: 'bayrum', emoji: '👤' },
-                { arabic: 'أَبُو بَكْر', english: 'abu bakr', emoji: '👤' },
-                { arabic: 'وَلَكِن', english: 'but', emoji: '❗' },
-                { arabic: 'يُوسُف', english: 'yusuf', emoji: '👤' },
-                { arabic: 'صَالِح', english: 'righteous', emoji: '✨' }
+                { arabic: 'سَيَّارَةٌ', english: 'car', emoji: '🚗' },
+                { arabic: 'حَافِلَةٌ', english: 'bus', emoji: '🚌' },
+                { arabic: 'قِطَارٌ', english: 'train', emoji: '🚂' },
+                { arabic: 'طَائِرَةٌ', english: 'plane', emoji: '✈️' },
+                { arabic: 'سَفِينَةٌ', english: 'ship', emoji: '🚢' },
+                { arabic: 'دَرَّاجَةٌ', english: 'bicycle', emoji: '🚲' },
+                { arabic: 'طَرِيقٌ', english: 'road', emoji: '🛣️' },
+                { arabic: 'شَارِعٌ', english: 'street', emoji: '🏙️' }
             ],
             22: [
-                { arabic: 'فِنْجَانٌ', english: 'teacup', emoji: '☕' },
-                { arabic: 'فَنَاجِين', english: 'teacups', emoji: '☕' },
-                { arabic: 'دَقِيقَةٌ', english: 'minute', emoji: '⏱️' },
-                { arabic: 'دَقَائِق', english: 'minutes', emoji: '⏱️' },
-                { arabic: 'مَفَاتِيح', english: 'keys', emoji: '🔑' },
-                { arabic: 'قَالَت', english: 'she said', emoji: '💬' },
-                { arabic: 'أَحْمَر', english: 'red', emoji: '🔴' },
-                { arabic: 'أَزْرَق', english: 'blue', emoji: '🔵' },
-                { arabic: 'أَخْضَر', english: 'green', emoji: '🟢' },
-                { arabic: 'أَسْوَد', english: 'black', emoji: '⚫' },
-                { arabic: 'أَصْفَر', english: 'yellow', emoji: '🟡' },
-                { arabic: 'أَبْيَض', english: 'white', emoji: '⚪' },
-                { arabic: 'قَالَ', english: 'he said', emoji: '💬' },
-                { arabic: 'مَكَّة', english: 'makkah', emoji: '🕋' },
-                { arabic: 'عُثْمَان', english: 'uthmaan', emoji: '👤' },
-                { arabic: 'طَالِبَانِ', english: 'two students', emoji: '📚' },
-                { arabic: 'قَلِيلَةٌ', english: 'few', emoji: '➖' },
-                { arabic: 'عَفَّان', english: 'affaan', emoji: '👤' },
-                { arabic: 'سُفْيَان', english: 'sufyaan', emoji: '👤' },
-                { arabic: 'مَرْوَان', english: 'marwaan', emoji: '👤' },
-                { arabic: 'نُعْمَان', english: 'numaan', emoji: '👤' },
-                { arabic: 'شَبْعَان', english: 'full', emoji: '😊' },
-                { arabic: 'أَنْوَر', english: 'anwar', emoji: '👤' },
-                { arabic: 'أَكْبَر', english: 'akbar', emoji: '👤' },
-                { arabic: 'مَسَاجِد', english: 'mosques', emoji: '🕌' },
-                { arabic: 'مَدَارِس', english: 'schools', emoji: '🏫' },
-                { arabic: 'بَغْدَاد', english: 'baghdad', emoji: '🗺️' },
-                { arabic: 'جَدَّة', english: 'jeddah', emoji: '🗺️' }
+                { arabic: 'أَحْمَرُ', english: 'red', emoji: '🔴' },
+                { arabic: 'أَزْرَقُ', english: 'blue', emoji: '🔵' },
+                { arabic: 'أَخْضَرُ', english: 'green', emoji: '🟢' },
+                { arabic: 'أَصْفَرُ', english: 'yellow', emoji: '🟡' },
+                { arabic: 'أَبْيَضُ', english: 'white', emoji: '⚪' },
+                { arabic: 'أَسْوَدُ', english: 'black', emoji: '⚫' },
+                { arabic: 'لَوْنٌ', english: 'color', emoji: '🎨' },
+                { arabic: 'رَأْسٌ', english: 'head', emoji: '👤' },
+                { arabic: 'يَدٌ', english: 'hand', emoji: '✋' },
+                { arabic: 'رِجْلٌ', english: 'leg', emoji: '🦵' }
             ],
             23: [
-                { arabic: 'رَبّ', english: 'lord', emoji: '👑' },
-                { arabic: 'عَالَم', english: 'world', emoji: '🌍' },
-                { arabic: 'رَحْمَن', english: 'most merciful', emoji: '🤲' },
-                { arabic: 'رَحِيم', english: 'most compassionate', emoji: '❤️' },
-                { arabic: 'مَالِك', english: 'master', emoji: '👑' },
-                { arabic: 'يَوْم الدِّين', english: 'day of judgement', emoji: '⚖️' },
-                { arabic: 'نَعْبُد', english: 'we worship', emoji: '🤲' },
-                { arabic: 'نَسْتَعِين', english: 'we seek help', emoji: '🙏' },
-                { arabic: 'اهْدِنَا', english: 'guide us', emoji: '🧭' },
-                { arabic: 'صِرَاط', english: 'path', emoji: '🛤️' },
-                { arabic: 'مُسْتَقِيم', english: 'straight', emoji: '↗️' },
-                { arabic: 'أَنْعَمْتَ', english: 'you bestowed favor', emoji: '🎁' },
-                { arabic: 'غَيْر', english: 'not', emoji: '❌' },
-                { arabic: 'مَغْضُوب', english: 'those who earned wrath', emoji: '😠' },
-                { arabic: 'ضَالِّين', english: 'those who are astray', emoji: '🔄' }
+                { arabic: 'بِسْمِ اللهِ', english: 'in the name of allah', emoji: '🕌' },
+                { arabic: 'الرَّحْمَنِ', english: 'the most merciful', emoji: '☪️' },
+                { arabic: 'الرَّحِيمِ', english: 'the most compassionate', emoji: '☪️' },
+                { arabic: 'الحَمْدُ', english: 'praise', emoji: '🤲' },
+                { arabic: 'رَبِّ', english: 'lord', emoji: '☪️' },
+                { arabic: 'العَالَمِينَ', english: 'of the worlds', emoji: '🌍' },
+                { arabic: 'مَالِكِ', english: 'master', emoji: '👑' },
+                { arabic: 'يَوْمِ', english: 'day of', emoji: '📅' },
+                { arabic: 'الدِّينِ', english: 'judgment', emoji: '⚖️' },
+                { arabic: 'إِيَّاكَ', english: 'you alone', emoji: '🤲' },
+                { arabic: 'نَعْبُدُ', english: 'we worship', emoji: '🕌' },
+                { arabic: 'نَسْتَعِينُ', english: 'we seek help', emoji: '🤲' },
+                { arabic: 'اِهْدِنَا', english: 'guide us', emoji: '🧭' },
+                { arabic: 'الصِّرَاطَ', english: 'the path', emoji: '🛤️' },
+                { arabic: 'المُسْتَقِيمَ', english: 'the straight', emoji: '➡️' }
             ]
         };
 
-        // Lesson metadata
         const lessonInfo = {
             1: { title: 'Lesson 1', description: 'Basic Objects & People' },
             2: { title: 'Lesson 2', description: 'More Objects' },
             3: { title: 'Lesson 3', description: 'Family & Articles' },
-            4: { title: 'Lesson 4', description: 'Adjectives & States' },
+            4: { title: 'Lesson 4', description: 'Adjectives' },
             5: { title: 'Lesson 5', description: 'Descriptive Words' },
             6: { title: 'Lesson 6', description: 'Body & Communication' },
             7: { title: 'Lesson 7', description: 'Sizes & Difficulty' },
             8: { title: 'Lesson 8', description: 'Time of Day' },
             9: { title: 'Lesson 9', description: 'Character Traits' },
             10: { title: 'Lesson 10', description: 'Names & Languages' },
-            11: { title: 'Lesson 11', description: 'Positions & Verbs' },
-            12: { title: 'Lesson 12', description: 'Greetings & Occupations' },
-            13: { title: 'Lesson 13', description: 'People & Descriptions' },
-            14: { title: 'Lesson 14', description: 'Pronouns & Countries' },
-            15: { title: 'Lesson 15', description: 'Time & Prayer' },
-            16: { title: 'Lesson 16', description: 'Places' },
-            17: { title: 'Lesson 17', description: 'Objects & Companies' },
+            11: { title: 'Lesson 11', description: 'Prepositions & Location' },
+            12: { title: 'Lesson 12', description: 'Pronouns' },
+            13: { title: 'Lesson 13', description: 'Plurals & Descriptions' },
+            14: { title: 'Lesson 14', description: 'Verbs (Past Tense)' },
+            15: { title: 'Lesson 15', description: 'Question Words' },
+            16: { title: 'Lesson 16', description: 'Places & Buildings' },
+            17: { title: 'Lesson 17', description: 'Countries & Cities' },
             18: { title: 'Lesson 18', description: 'Numbers & Celebrations' },
-            19: { title: 'Lesson 19', description: 'Numbers & Travel' },
-            20: { title: 'Lesson 20', description: 'Counting Objects' },
-            21: { title: 'Lesson 21', description: 'Places & Colors' },
-            22: { title: 'Lesson 22', description: 'Colors & Objects' },
+            19: { title: 'Lesson 19', description: 'Nature' },
+            20: { title: 'Lesson 20', description: 'Time: Days & Weeks' },
+            21: { title: 'Lesson 21', description: 'Transportation' },
+            22: { title: 'Lesson 22', description: 'Colors & Body Parts' },
             23: { title: 'Lesson 23', description: 'Surah Al-Fatiha' }
         };
 
-        // State management
+        // State
         let currentLesson = 'all';
         let currentCards = [];
         let currentIndex = 0;
@@ -1109,13 +863,14 @@
         let incorrectCount = 0;
         let touchStartX = 0;
         let touchEndX = 0;
+        let isSwiping = false;
 
         // Initialize
         function init() {
             generateLessonCards();
         }
 
-        // Generate lesson cards on cover page
+        // Generate lesson cards
         function generateLessonCards() {
             const lessonGrid = document.getElementById('lesson-grid');
             lessonGrid.innerHTML = '';
@@ -1128,52 +883,47 @@
             const allWordCount = Object.values(vocabularyData).reduce((sum, lesson) => sum + lesson.length, 0);
             allCard.innerHTML = `
                 <h3>🌟 All Lessons</h3>
-                <p class="word-count">Practice all ${allWordCount} vocabulary words (Lessons 1-23)</p>
+                <p class="word-count">Practice all ${allWordCount} words</p>
             `;
             lessonGrid.appendChild(allCard);
 
             // Individual lesson cards
-            for (let i = 1; i <= 23; i++) {
+            Object.keys(lessonInfo).forEach(lessonNum => {
                 const card = document.createElement('div');
                 card.className = 'lesson-card';
-                card.onclick = () => startLesson(i);
+                card.onclick = () => startLesson(parseInt(lessonNum));
                 
-                const info = lessonInfo[i];
-                const wordCount = vocabularyData[i]?.length || 0;
+                const info = lessonInfo[lessonNum];
+                const wordCount = vocabularyData[lessonNum]?.length || 0;
                 
                 card.innerHTML = `
                     <h3>${info.title}</h3>
                     <p class="word-count">${info.description} • ${wordCount} words</p>
                 `;
                 lessonGrid.appendChild(card);
-            }
+            });
         }
 
-        // Start a lesson
+        // Start lesson
         function startLesson(lesson) {
             currentLesson = lesson;
             
-            // Prepare cards
             if (lesson === 'all') {
                 currentCards = [];
-                for (let i = 1; i <= 23; i++) {
-                    if (vocabularyData[i]) {
-                        currentCards = currentCards.concat(vocabularyData[i]);
-                    }
-                }
+                Object.values(vocabularyData).forEach(lessonWords => {
+                    currentCards = currentCards.concat(lessonWords);
+                });
             } else {
                 currentCards = [...vocabularyData[lesson]];
             }
 
-            // Shuffle cards
-            shuffleArray(currentCards);
+            // Shuffle
+            currentCards.sort(() => Math.random() - 0.5);
 
-            // Reset state
             currentIndex = 0;
             correctCount = 0;
             incorrectCount = 0;
 
-            // Update UI
             document.getElementById('cover-page').classList.add('hidden');
             document.getElementById('flashcard-page').classList.add('active');
             
@@ -1184,15 +934,7 @@
             updateStats();
         }
 
-        // Shuffle array
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-
-        // Update current card
+        // Update card
         function updateCard() {
             if (currentIndex >= currentCards.length) {
                 currentIndex = 0;
@@ -1201,23 +943,22 @@
             const card = currentCards[currentIndex];
             document.getElementById('arabic-word').textContent = card.arabic;
             
-            // Reset image and hint button
             const imageEl = document.getElementById('word-image');
             imageEl.textContent = card.emoji;
             imageEl.classList.remove('revealed');
             
             const hintBtn = document.getElementById('hint-btn');
             hintBtn.disabled = false;
-            hintBtn.textContent = '💡 Show Hint';
+            hintBtn.textContent = '💡 Hint';
             
-            document.getElementById('answer-input').value = '';
-            document.getElementById('answer-input').className = '';
+            const input = document.getElementById('answer-input');
+            input.value = '';
+            input.className = '';
+            
             document.getElementById('feedback').classList.remove('show');
             document.getElementById('correct-answer').classList.remove('show');
-            document.getElementById('card-progress').textContent = `${currentIndex + 1} / ${currentCards.length}`;
-            
-            // Focus on input
-            document.getElementById('answer-input').focus();
+            document.getElementById('card-progress').textContent = 
+                `${currentIndex + 1}/${currentCards.length}`;
         }
 
         // Check answer
@@ -1225,52 +966,45 @@
             const userAnswer = document.getElementById('answer-input').value.trim().toLowerCase();
             const correctAnswer = currentCards[currentIndex].english.toLowerCase();
             
+            if (!userAnswer) return;
+            
             const feedback = document.getElementById('feedback');
             const answerInput = document.getElementById('answer-input');
             
-            // Check if user just added/removed 's' or 'es' for plural (should be WRONG)
+            // Check for plural mistakes
             const isPluralMistake = (
                 (userAnswer + 's' === correctAnswer) ||
                 (userAnswer + 'es' === correctAnswer) ||
                 (correctAnswer + 's' === userAnswer) ||
-                (correctAnswer + 'es' === userAnswer) ||
-                (userAnswer === correctAnswer.replace(/s$/, '')) ||
-                (correctAnswer === userAnswer.replace(/s$/, ''))
+                (correctAnswer + 'es' === userAnswer)
             );
             
-            // Check for exact match first
             let isCorrect = userAnswer === correctAnswer;
             
-            // If not exact and not a plural mistake, allow fuzzy matching
             if (!isCorrect && !isPluralMistake) {
-                // Allow fuzzy matching for typos (but not for plural confusion)
                 isCorrect = levenshteinDistance(userAnswer, correctAnswer) <= 2;
             }
             
             if (isCorrect) {
                 correctCount++;
                 answerInput.classList.add('correct');
-                feedback.textContent = '✓ Correct! Great job!';
+                feedback.textContent = '✓ Correct! Click Next →';
                 feedback.className = 'feedback correct show';
-                
-                setTimeout(() => {
-                    nextCard();
-                }, 1500);
             } else {
                 incorrectCount++;
                 answerInput.classList.add('incorrect');
-                feedback.textContent = '✗ Incorrect. Try again!';
+                feedback.textContent = '✗ Incorrect';
                 feedback.className = 'feedback incorrect show';
                 
                 document.getElementById('correct-answer').textContent = 
-                    `Correct answer: ${currentCards[currentIndex].english}`;
+                    `Answer: ${currentCards[currentIndex].english}`;
                 document.getElementById('correct-answer').classList.add('show');
             }
             
             updateStats();
         }
 
-        // Levenshtein distance for fuzzy matching
+        // Levenshtein distance
         function levenshteinDistance(str1, str2) {
             const matrix = [];
             
@@ -1306,13 +1040,12 @@
             document.getElementById('correct-answer').classList.add('show');
         }
 
-        // Next card
+        // Navigation
         function nextCard() {
             currentIndex = (currentIndex + 1) % currentCards.length;
             updateCard();
         }
 
-        // Previous card
         function prevCard() {
             currentIndex = (currentIndex - 1 + currentCards.length) % currentCards.length;
             updateCard();
@@ -1334,30 +1067,55 @@
             document.getElementById('flashcard-page').classList.remove('active');
         }
 
-        // Touch/swipe handlers
+        // Touch handlers
         function handleTouchStart(e) {
+            // Don't swipe if touching input, button, or interactive elements
+            const target = e.target;
+            if (target.tagName === 'INPUT' || 
+                target.tagName === 'BUTTON' || 
+                target.closest('button') ||
+                target.closest('.input-section') ||
+                target.closest('.button-group')) {
+                isSwiping = false;
+                return;
+            }
+            
             touchStartX = e.changedTouches[0].screenX;
+            isSwiping = true;
         }
 
         function handleTouchMove(e) {
+            if (!isSwiping) return;
+            
+            // Don't process if touching interactive elements
+            const target = e.target;
+            if (target.tagName === 'INPUT' || target.tagName === 'BUTTON') {
+                isSwiping = false;
+                return;
+            }
+            
             touchEndX = e.changedTouches[0].screenX;
             const flashcard = document.getElementById('flashcard');
             const diff = touchEndX - touchStartX;
             
-            if (Math.abs(diff) > 50) {
+            if (Math.abs(diff) > 30) {
                 if (diff > 0) {
                     flashcard.classList.add('swipe-right');
                 } else {
                     flashcard.classList.add('swipe-left');
                 }
+            } else {
+                flashcard.classList.remove('swipe-left', 'swipe-right');
             }
         }
 
         function handleTouchEnd(e) {
+            if (!isSwiping) return;
+            
             const flashcard = document.getElementById('flashcard');
             const diff = touchEndX - touchStartX;
             
-            if (Math.abs(diff) > 100) {
+            if (Math.abs(diff) > 80) {
                 if (diff > 0) {
                     nextCard();
                 } else {
@@ -1368,41 +1126,74 @@
             flashcard.classList.remove('swipe-left', 'swipe-right');
             touchStartX = 0;
             touchEndX = 0;
+            isSwiping = false;
         }
 
         // Event listeners
         document.addEventListener('DOMContentLoaded', () => {
             init();
 
-            // Button event listeners
-            document.getElementById('check-btn').addEventListener('click', checkAnswer);
-            document.getElementById('show-answer-btn').addEventListener('click', showAnswer);
-            document.getElementById('skip-btn').addEventListener('click', nextCard);
-            document.getElementById('prev-btn').addEventListener('click', prevCard);
-            document.getElementById('next-btn').addEventListener('click', nextCard);
+            document.getElementById('check-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                checkAnswer();
+            });
+            document.getElementById('show-answer-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                showAnswer();
+            });
+            document.getElementById('skip-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                nextCard();
+            });
+            document.getElementById('prev-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                prevCard();
+            });
+            document.getElementById('next-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                nextCard();
+            });
             
-            // Hint button
-            document.getElementById('hint-btn').addEventListener('click', () => {
+            document.getElementById('hint-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 const imageEl = document.getElementById('word-image');
                 const hintBtn = document.getElementById('hint-btn');
                 
                 imageEl.classList.add('revealed');
                 hintBtn.disabled = true;
-                hintBtn.textContent = '✓ Hint Shown';
+                hintBtn.textContent = '✓ Shown';
             });
 
-            // Enter key to check answer
             document.getElementById('answer-input').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     checkAnswer();
                 }
             });
 
-            // Touch/swipe events
             const flashcard = document.getElementById('flashcard');
-            flashcard.addEventListener('touchstart', handleTouchStart, false);
-            flashcard.addEventListener('touchmove', handleTouchMove, false);
-            flashcard.addEventListener('touchend', handleTouchEnd, false);
+            flashcard.addEventListener('touchstart', handleTouchStart, { passive: true });
+            flashcard.addEventListener('touchmove', handleTouchMove, { passive: true });
+            flashcard.addEventListener('touchend', handleTouchEnd, { passive: true });
+            
+            // Prevent touch events on interactive elements from bubbling to flashcard
+            const interactiveElements = document.querySelectorAll('input, button, .input-section, .button-group');
+            interactiveElements.forEach(el => {
+                el.addEventListener('touchstart', (e) => {
+                    e.stopPropagation();
+                }, { passive: true });
+                el.addEventListener('touchmove', (e) => {
+                    e.stopPropagation();
+                }, { passive: true });
+                el.addEventListener('touchend', (e) => {
+                    e.stopPropagation();
+                }, { passive: true });
+            });
         });
     </script>
 </body>
